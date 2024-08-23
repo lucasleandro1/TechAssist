@@ -1,0 +1,3 @@
+class AparelhosController < ApplicationController
+
+end
