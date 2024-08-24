@@ -3,16 +3,16 @@ class RegistrosController < ApplicationController
 
   def index
     @user = current_user
-    @registros = @user.resgistro
+    @resgistros = @user.resgistro
   end
 
   def new
-    @registros = current_user.registros.build
+    @resgistros = current_user.resgistro.build
   end
 
   def create
-    @registros = current_user.registros.build(registros_params)
-    if @registros.save
+    @resgistros = current_user.resgistros.build(resgistros_params)
+    if @resgistros.save
       flash[:notice] = "registros created."
       redirect_to root_path
     else
@@ -50,7 +50,7 @@ class RegistrosController < ApplicationController
 
   private
 
-  # def registros_params
-  #   params.require(:registros).permit(:id, :text, :tag, :foto)
-  # end
+  def registros_params
+    params.require(:registros).permit(:id, :data_abertura, :data_fechamento, :descricao, :status, :comentario, :sintoma, :anexo)
+  end
 end
