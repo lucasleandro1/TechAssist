@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ResgistroTest < ActiveSupport::TestCase
+class RegistroTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

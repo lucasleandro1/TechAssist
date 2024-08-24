@@ -4,5 +4,6 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :resgistro
+
+  has_many :tickets
 end

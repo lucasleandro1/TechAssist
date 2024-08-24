@@ -44,6 +44,10 @@ gem "bootsnap", require: false
 
 gem "devise"
 
+gem "pry"
+
+gem "pry-remote"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

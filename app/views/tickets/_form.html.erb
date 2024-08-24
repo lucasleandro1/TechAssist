@@ -1,0 +1,10 @@
+
+<%= form_with(model:@ticket) do |f| %>
+  <div>
+    <%= f.label :comentario %>
+    <%= f.text_field :comentario %>
+  </div>
+  <div>
+    <%= f.submit 'Cadastrar' %>
+  </div>
+<% end %>

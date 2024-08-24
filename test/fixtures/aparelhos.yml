@@ -5,11 +5,11 @@ one:
   serial: MyString
   modelo: MyString
   marca: MyString
-  cliente: one
+  client: one
 
 two:
   imei: MyString
   serial: MyString
   modelo: MyString
   marca: MyString
-  cliente: two
+  client: two
