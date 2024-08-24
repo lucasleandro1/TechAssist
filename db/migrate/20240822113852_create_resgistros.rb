@@ -1,6 +1,6 @@
-class CreateResgistros < ActiveRecord::Migration[7.0]
+class CreateRegistros < ActiveRecord::Migration[7.0]
   def change
-    create_table :resgistros do |t|
+    create_table :registros do |t|
       t.string :data_abertura
       t.string :data_fechamento
       t.string :descricao

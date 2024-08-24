@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_22_113852) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_24_060212) do
   create_table "aparelhos", force: :cascade do |t|
     t.string "imei"
     t.string "serial"
@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_22_113852) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "resgistros", force: :cascade do |t|
+  create_table "registro", force: :cascade do |t|
     t.string "data_abertura"
     t.string "data_fechamento"
     t.string "descricao"
@@ -43,8 +43,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_22_113852) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["aparelho_id"], name: "index_resgistros_on_aparelho_id"
-    t.index ["user_id"], name: "index_resgistros_on_user_id"
+    t.string "pecas"
+    t.index ["aparelho_id"], name: "index_registro_on_aparelho_id"
+    t.index ["user_id"], name: "index_registro_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -60,6 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_22_113852) do
   end
 
   add_foreign_key "aparelhos", "clientes"
-  add_foreign_key "resgistros", "aparelhos"
-  add_foreign_key "resgistros", "users"
+  add_foreign_key "registro", "aparelhos"
+  add_foreign_key "registro", "users"
 end
