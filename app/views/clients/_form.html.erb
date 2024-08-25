@@ -1,0 +1,7 @@
+<%= simple_form_for @client do |f| %>
+  <%= f.input :nome %>
+  <%= f.input :cpf %>
+  <%= f.input :telefone %>
+  <%= f.input :email %>
+  <%= f.button :submit, class: "btn btn-primary btn-block" %>
+<% end %>

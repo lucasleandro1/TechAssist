@@ -1,9 +1,8 @@
 class TicketsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :set_mobile
 
   def index
-    @user = current_user
-    @tickets = @user.tickets
+    @tickets = Ticket.all
   end
 
   def new
@@ -11,7 +10,7 @@ class TicketsController < ApplicationController
   end
 
   def create
-    @ticket = Ticket.new(tickets_params)
+    @ticket = @mobile_device.tickets.new(ticket_params)
     if @ticket.save
       flash[:notice] = "ticket created."
       redirect_to root_path
@@ -23,7 +22,7 @@ class TicketsController < ApplicationController
 
   def show
     @ticket = Ticket.find(params[:id])
-    @client = @ticket.client
+    @aparelho = @ticket.mobile_device
   end
 
   def update
@@ -45,14 +44,19 @@ class TicketsController < ApplicationController
   def destroy
     @ticket = Ticket.find(params[:id])
     @ticket.destroy
-    redirect_to ticket_path, notice: 'ticket excluído com sucesso.'
+    redirect_to tickets_path, notice: 'ticket excluído com sucesso.'
   end
 
   private
 
-  def tickets_params
-    params.require(:tickets).permit(:data_abertura, :data_fechamento, :descricao, :status,
+  def set_mobile
+    @mobile_device = MobileDevice.last
+  end
+
+
+  def ticket_params
+    params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
                                     :comentario, :sintoma, :anexo, :pecas,
-                                    :mobile_device_id).merge({ user_id: current_user.id })
+                                    :mobile_device_id)
   end
 end
