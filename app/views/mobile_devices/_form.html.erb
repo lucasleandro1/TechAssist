@@ -1,38 +1,8 @@
-
-<div class="form-container">
-  <h2>Cadastro de Registros</h2>
-  <%= form_with model: @registro, local: true, html: { enctype: "multipart/form-data" } do |f| %>
-    <div class="form-group">
-        <%= f.label :data_abertura, "Data de Abertura:" %>
-        <%= f.date_field :data_abertura, required: true, id: "data_abertura" %>
-    </div>
-    <div class="form-group">
-        <%= f.label :data_fechamento, "Data de Fechamento:" %>
-        <%= f.date_field :data_fechamento, id: "data_fechamento" %>
-    </div>
-    <div class="form-group">
-        <%= f.label :descricao, "Descrição:" %>
-        <%= f.text_area :descricao, rows: 4, required: true, id: "descricao" %>
-    </div>
-    <div class="form-group">
-        <%= f.label :status, "Status:" %>
-        <%= f.select :status, [["Aberto", "aberto"], ["Em Progresso", "em_progresso"], ["Fechado", "fechado"]], required: true, id: "status" %>
-    </div>
-    <div class="form-group">
-        <%= f.label :comentario, "Comentário:" %>
-        <%= f.text_area :comentario, rows: 4, id: "comentario" %>
-    </div>
-    <div class="form-group">
-        <%= f.label :sintoma, "Sintoma:" %>
-        <%= f.text_field :sintoma, required: true, id: "sintoma" %>
-    </div>
-    <div class="form-group">
-        <%= f.label :anexo, "Anexo:" %>
-        <%= f.file_field :anexo, id: "anexo" %>
-    </div>
-    <div class="form-group">
-        <%= f.submit "Cadastrar Registro", class: "btn btn-primary btn-block" %>
-    </div>
-  <% end %>
-</div>
-
+<%= simple_form_for @mobile_device do |f| %>
+  <%= f.input :imei %>
+  <%= f.input :serial %>
+  <%= f.input :modelo %>
+  <%= f.input :marca %>
+  <%= f.input :client_id, collection: Client.all.pluck(:nome, :id),  include_blank: "Selecione um Cliente" %>
+  <%= f.button :submit, class: "btn btn-primary btn-block" %>
+<% end %>

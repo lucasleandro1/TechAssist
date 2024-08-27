@@ -1,0 +1,29 @@
+<% if @mobile_devices.any? %>
+<h1>Resultados da Busca</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>IMEI</th>
+        <th>serial</th>
+        <th>modelo</th>
+        <th>marca</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @mobile_devices.each do |mobile_device| %>
+        <tr>
+          <td><%= mobile_device.imei %></td>
+          <td><%= mobile_device.serial %></td>
+          <td><%= mobile_device.modelo %></td>
+          <td><%= mobile_device.marca %></td>
+          <td>
+            <%= link_to 'editar', edit_mobile_device_path(mobile_device), class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= link_to 'Cadastrar Novo Aparelho', new_mobile_device_path, class: "btn btn-success" %>
+<% end %>

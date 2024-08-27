@@ -1,1 +1,20 @@
-<h1>jhdvbushab</h1>
+<h2>tickets</h2>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">OS</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <th scope="row"><%= ticket.id %></th>
+        <td>
+          <%= link_to 'Editar', edit_ticket_path(ticket), class: 'btn btn-primary btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

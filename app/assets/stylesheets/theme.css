@@ -1,0 +1,96 @@
+
+html,
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+
+body {
+  padding-top: 20px;
+  background-color: #f5f7fb !important;
+}
+
+@media (max-width: 991.98px) {
+  .offcanvas-collapse {
+    position: fixed;
+    top: 56px; /* Height of navbar */
+    bottom: 0;
+    left: 100%;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    overflow-y: auto;
+    visibility: hidden;
+    background-color: #343a40;
+    transition: transform .3s ease-in-out, visibility .3s ease-in-out;
+  }
+  .offcanvas-collapse.open {
+    visibility: visible;
+    transform: translateX(-100%);
+  }
+}
+
+.nav-scroller .nav {
+  color: rgba(255, 255, 255, .75);
+}
+
+.nav-scroller .nav-link {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: .875rem;
+  color: #6c757d;
+}
+
+.nav-scroller .nav-link:hover {
+  color: #007bff;
+}
+
+.nav-scroller .active {
+  font-weight: 500;
+  color: #343a40;
+}
+
+.bg-purple {
+  background-color: #6f42c1;
+}
+.user{
+  color: red;
+}
+
+.company-logo{
+  width: 100px;
+}
+
+.container{
+  padding: 10px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  box-shadow: 0px 0px 6px #888;
+  margin: 5px auto 40px auto;
+}
+
+.btnout {
+  border: none;
+  background-color: transparent;
+  padding: 0;;
+}
+
+.public-position{
+  border: 1px solid #fff;
+  border-radius: 3px;
+}
+
+.public-position:hover{
+  background-color: #f5f7fb;
+  color: black !important;
+}
+
+#the-count {
+  text-align: right;
+  margin: 5px 0px;
+}
+
+.select-carrera {
+  width: 100%;
+  max-width: 300px;
+}
