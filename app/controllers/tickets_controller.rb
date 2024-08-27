@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_action :authenticate_user!, :set_mobile
+  before_action :authenticate_user!
 
   def index
     @tickets = Ticket.all
@@ -10,7 +10,7 @@ class TicketsController < ApplicationController
   end
 
   def create
-    @ticket = @mobile_device.tickets.new(ticket_params)
+    @ticket = current_user.tickets.new(parsed_params)
     if @ticket.save
       flash[:notice] = "ticket created."
       redirect_to root_path
@@ -49,10 +49,13 @@ class TicketsController < ApplicationController
 
   private
 
-  def set_mobile
-    @mobile_device = MobileDevice.last
+  def parsed_params
+    ticket_params.tap do |hash|
+      hash["sintoma"] = ticket_params["sintoma"].to_i
+      hash["pecas"] = ticket_params["pecas"].to_i
+      hash["status"] = ticket_params["status"].to_i
+    end
   end
-
 
   def ticket_params
     params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,

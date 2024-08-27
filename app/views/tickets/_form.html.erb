@@ -1,12 +1,12 @@
 <%= simple_form_for @ticket do |f| %>
-  <%= f.input :mobile_device_id, collection: @mobile_device, label_method: :name, value_method: :id, include_blank: 'Selecione um dispositivo' %>
+  <%= f.input :mobile_device_id, collection: MobileDevice.all.map { |n| ["#{n.modelo} - #{n.marca}", n.id] }, include_blank: 'Selecione um dispositivo' %>
   <%= f.input :data_abertura, as: :date %>
   <%= f.input :data_fechamento, as: :date %>
   <%= f.input :descricao %>
-  <%= f.input :status %>
+  <%= f.input :status, collection: Ticket.statuses, include_blank: 'Selecione um status' %>
   <%= f.input :comentario %>
-  <%= f.input :sintoma %>
-  <%= f.input :pecas %>
+  <%= f.input :sintoma, collection: Ticket.sintomas, include_blank: 'Selecione um sintoma' %>
+  <%= f.input :pecas, collection: Ticket.pecas, include_blank: 'Selecione um sintoma' %>
   <%= f.input :anexo, as: :file %>
   <%= f.button :submit, class: "btn btn-primary btn-block" %>
 <% end %>

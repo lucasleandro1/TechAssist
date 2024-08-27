@@ -1,12 +1,12 @@
 class MobileDevicesController < ApplicationController
-  before_action :authenticate_user!, :set_client
+  before_action :authenticate_user!
 
   def new
     @mobile_device = MobileDevice.new
   end
 
   def create
-    @mobile_device = @client.mobile_devices.new(mobile_device_params)
+    @mobile_device = MobileDevice.new(mobile_device_params)
     if @mobile_device.save
       flash[:notice] = "mobile_device created."
       redirect_to root_path
@@ -62,10 +62,6 @@ class MobileDevicesController < ApplicationController
 
 
   private
-
-  def set_client
-    @client = Client.last
-  end
 
   def mobile_device_params
     params.require(:mobile_device).permit(:imei,:serial,:modelo,:marca,:client_id)

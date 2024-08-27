@@ -3,5 +3,6 @@
   <%= f.input :serial %>
   <%= f.input :modelo %>
   <%= f.input :marca %>
+  <%= f.input :client_id, collection: Client.all.pluck(:nome, :id),  include_blank: "Selecione um Cliente" %>
   <%= f.button :submit, class: "btn btn-primary btn-block" %>
 <% end %>
