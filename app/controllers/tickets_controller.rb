@@ -36,6 +36,10 @@ class TicketsController < ApplicationController
     end
   end
 
+  def status
+    @status = params[:status]
+    @tickets = Ticket.where(status: @status)
+  end
 
   def edit
     @ticket = Ticket.find(params[:id])

@@ -1,0 +1,25 @@
+<h1>Tickets <%= @status %></h1>
+
+<% if @tickets.any? %>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">OS</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <th scope="row"><%= ticket.id %></th>
+        <td>
+          <%= link_to 'Editar', edit_ticket_path(ticket), class: 'btn btn-primary btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <p>Não há tickets com este status fsdsfgs.</p>
+<% end %>
+
