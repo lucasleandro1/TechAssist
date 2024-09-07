@@ -19,7 +19,9 @@ module AssisTech
     config.load_defaults 7.0
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    config.api_only = true
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_your_app_session'
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
