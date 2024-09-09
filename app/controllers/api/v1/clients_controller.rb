@@ -4,8 +4,12 @@ module Api
       # before_action :authenticate_user!
 
       def index
-        @clients = Client.includes(:mobile_devices).all
-        render json: @clients.to_json(include: :mobile_devices)
+        @clients = Client.includes(mobile_devices: :tickets).all
+        render json: @clients.to_json(include: {
+          mobile_devices: {
+            include: :tickets
+          }
+        })
       end
 
       def create
@@ -51,22 +55,22 @@ module Api
         end
       end
 
+      def show
+        @clients = Client.includes(mobile_devices: :tickets).find(params[:id])
+        render json: @clients.to_json(include: {
+          mobile_devices: {
+            include: :tickets
+          }
+        })
+      end
 
       def search
         if params[:q_cpf_cont].present?
           @clients = Client.where('cpf LIKE ?', "%#{params[:q_cpf_cont]}%")
+          render json: @clients, status: :ok
         else
-          render json: new_client_path
+          render json: { message: "CPF query parameter is missing." }, status: :bad_request
         end
-        respond_to do |format|
-          format.html { render :search_results }
-          format.json { render json: @clients }
-        end
-      end
-
-      def home
-        @cpf = params[:cpf] if params[:cpf].present?
-        render json: @cpf
       end
 
       private
@@ -74,6 +78,7 @@ module Api
       def client_params
         params.require(:client).permit(:cpf,:nome,:telefone,:email)
       end
+
     end
   end
 end
