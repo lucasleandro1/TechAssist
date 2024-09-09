@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: bash -c "bundle install && rails db:create db:migrate db:seed && rails server -b '0.0.0.0'"
+    container_name: techassisst
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/opt/app
