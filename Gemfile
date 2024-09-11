@@ -44,6 +44,8 @@ gem "bootsnap", require: false
 
 gem "devise"
 
+gem 'devise-api', github: 'nejdetkadir/devise-api', branch: 'main'
+
 gem "pry"
 
 gem "pry-remote"
