@@ -1,7 +1,7 @@
 module Api
   module V1
       class MobileDevicesController < ApplicationController
-      # before_action :authenticate_user!
+      before_action :authenticate_devise_api_token!
 
       def index
         @mobile_devices = MobileDevice.includes(:tickets).all
