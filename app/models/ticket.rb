@@ -2,7 +2,8 @@ class Ticket < ApplicationRecord
   belongs_to :mobile_device
   belongs_to :user
 
-  enum status: { "Em andamento" => 1, "Pendente" => 2, "Reparo concluído" => 3 }
-  enum pecas: { "Bateria" => 1, "Tela" => 2, "Placa Sub" => 3 }
-  enum sintoma: { "Energia" => 1, "Software" => 2, "Hardware" => 3 }
+  enum status: { "Em andamento" => 0, "Pendente" => 1, "Reparo concluído" => 1 }
+  enum pecas: { "Bateria" => 0, "Tela" => 1, "Placa Sub" => 2 }
+  enum sintoma: { "Energia" => 0, "Software" => 1, "Hardware" => 2 }
+
 end

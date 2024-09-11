@@ -14,7 +14,6 @@ Rails.application.routes.draw do
           get 'status/:status', to: 'tickets#status', as: :status
         end
       end
-
     end
   end
 end
