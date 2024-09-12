@@ -9,7 +9,7 @@ module Api
       end
 
       def create
-        @ticket = Ticket.new(ticket_params)
+        @ticket = Ticket.new(parsed_params)
         if @ticket.save
           render json: {
             message: "Ticket created successfully.",
@@ -22,7 +22,6 @@ module Api
           }, status: :unprocessable_entity
         end
       end
-
 
       def show
         @ticket = Ticket.find(params[:id])
@@ -63,13 +62,14 @@ module Api
           hash["sintoma"] = ticket_params["sintoma"].to_i
           hash["pecas"] = ticket_params["pecas"].to_i
           hash["status"] = ticket_params["status"].to_i
+          hash["user_id"] = current_devise_api_user.id
         end
       end
 
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
                                         :comentario, :sintoma, :anexo, :pecas,
-                                        :mobile_device_id, :user_id)
+                                        :mobile_device_id)
       end
     end
   end
