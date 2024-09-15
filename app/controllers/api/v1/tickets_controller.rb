@@ -4,8 +4,12 @@ module Api
       before_action :authenticate_devise_api_token!
 
       def index
-        @tickets = Ticket.all
-        render json: @tickets
+        @tickets = Ticket.includes(mobile_device: :client).all
+        render json: @tickets.as_json(include: {
+          mobile_device: {
+            include: :client
+          }
+        })
       end
 
       def create
@@ -24,35 +28,40 @@ module Api
       end
 
       def show
-        @ticket = Ticket.find(params[:id])
-        @aparelho = @ticket.mobile_device
+        @tickets = Ticket.includes(mobile_device: :client).find(params[:id])
+        render json: @tickets.as_json(include: {
+          mobile_device: {
+            include: :client
+          }
+        })
       end
 
       def update
         @ticket = Ticket.find(params[:id])
         if @ticket.update(ticket_params)
-          flash[:notice] = "ticket atualizado com sucesso."
-          redirect_to root_path
+          render json: { message: "Ticket updated successfully.", ticket: @ticket}, status: :ok
         else
-          flash[:error] = "ticket não atualizado."
-          render :edit
+          render json: {message: "Error when updating ticket.", errors: @ticket.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
       def status
         @status = params[:status]
-        @tickets = Ticket.includes(client: :mobile_device).where(status: @status)
-        render json: @tickets.to_json(include: {
-          client: {
-            include: :mobile_device
+        @tickets = Ticket.includes(mobile_device: :client).where(status: @status)
+        render json: @tickets.as_json(include: {
+          mobile_device: {
+            include: :client
           }
         })
       end
 
       def destroy
         @ticket = Ticket.find(params[:id])
-        @ticket.destroy
-        redirect_to tickets_path, notice: 'ticket excluído com sucesso.'
+        if @ticket.destroy
+          render json: {message: "Ticket deleted successfully."}, status: :ok 
+        else
+          render json: {message: "Error when deleting ticket.", errors: @ticket.errors.full_messages}, status: :unprocessable_entity    
+        end 
       end
 
       private
