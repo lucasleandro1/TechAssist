@@ -5,7 +5,7 @@ module Api
 
       def index
         @clients = Client.includes(mobile_devices: :tickets).all
-        render json: @clients.to_json(include: {
+        render json: @clients.as_json(include: {
           mobile_devices: {
             include: :tickets
           }
@@ -57,7 +57,7 @@ module Api
 
       def show
         @clients = Client.includes(mobile_devices: :tickets).find(params[:id])
-        render json: @clients.to_json(include: {
+        render json: @clients.as_json(include: {
           mobile_devices: {
             include: :tickets
           }

@@ -5,7 +5,7 @@ module Api
 
       def index
         @mobile_devices = MobileDevice.includes(:tickets).all
-        render json: @mobile_devices.to_json(include: :tickets)
+        render json: @mobile_devices.as_json(include: :tickets)
       end
 
       def create
