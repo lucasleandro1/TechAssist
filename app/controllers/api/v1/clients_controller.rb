@@ -14,7 +14,7 @@ module Api
 
       def create
         @client = Client.new(client_params)
-        if @client.save
+        if @client.save 
           render json: {
             message: "Client created successfully.",
             client: @client
