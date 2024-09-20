@@ -13,19 +13,23 @@ module Api
       end
 
       def create
-        @client = Client.new(client_params)
-        if @client.save 
-          render json: {
-            message: "Client created successfully.",
-            client: @client
-          }, status: :created
+        if Client.exists?(cpf: client_params[:cpf])
+          render json: { message: "Client with this CPF already exists." }, status: :unprocessable_entity
         else
-          render json: {
-            message: "Error when registering client.",
-            errors: @client.errors.full_messages
-          }, status: :unprocessable_entity
+          @client = Client.new(client_params)
+          if @client.save
+            render json: { 
+              message: "Client created successfully.", 
+              client: @client 
+              }, status: :created
+          else
+            render json: { message: "Error when registering client.", 
+            errors: @client.errors.full_messages 
+            }, status: :unprocessable_entity
+          end
         end
       end
+      
 
       def update
         @client = Client.find(params[:id])

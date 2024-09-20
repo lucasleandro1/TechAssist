@@ -6,5 +6,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :api
 
-  has_many :tickets
+  has_many :tickets, dependent: :destroy
 end

@@ -13,20 +13,26 @@ module Api
       end
 
       def create
-        @ticket = Ticket.new(parsed_params)
-        if @ticket.save
+        if Ticket.exists?(mobile_device_id: ticket_params[:mobile_device_id], descricao: ticket_params[:descricao], status: ticket_params[:status])
           render json: {
-            message: "Ticket created successfully.",
-            ticket: @ticket
-          }, status: :created
-        else
-          render json: {
-            message: "Error when registering ticket.",
-            errors: @ticket.errors.full_messages
+            message: "Ticket already exists for this device with the same description and status."
           }, status: :unprocessable_entity
+        else
+          @ticket = Ticket.new(parsed_params)
+          if @ticket.save
+            render json: {
+              message: "Ticket created successfully.",
+              ticket: @ticket
+            }, status: :created
+          else
+            render json: {
+              message: "Error when registering ticket.",
+              errors: @ticket.errors.full_messages
+            }, status: :unprocessable_entity
+          end
         end
       end
-
+      
       def show
         @tickets = Ticket.includes(mobile_device: :client).find(params[:id])
         render json: @tickets.as_json(include: {
