@@ -13,6 +13,7 @@ module Api
       end
 
       def create
+        #Verificando antes de criar um novo ticket se já existe um com os mesmos parâmetros
         if Ticket.exists?(mobile_device_id: ticket_params[:mobile_device_id], descricao: ticket_params[:descricao], status: ticket_params[:status])
           render json: {
             message: "Ticket already exists for this device with the same description and status."

@@ -13,6 +13,7 @@ module Api
       end
 
       def create
+        #Verificando pelo cpf se já existe ou não um cliente com o mesmo cpf
         if Client.exists?(cpf: client_params[:cpf])
           render json: { message: "Client with this CPF already exists." }, status: :unprocessable_entity
         else

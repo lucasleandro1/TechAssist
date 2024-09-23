@@ -8,3 +8,4 @@ class User < ApplicationRecord
 
   has_many :tickets, dependent: :destroy
 end
+#Aqui estou garantindo que ao removeer um usuário seus tickets sejam removidos junto a ele

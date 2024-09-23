@@ -9,6 +9,7 @@ module Api
       end
 
       def create
+        #Verificando se não existe um mesmo imei de um aparelho sendo criado
         if MobileDevice.exists?(imei: mobile_device_params[:imei])
           render json: {
             message: "Device with this IMEI already exists."
