@@ -9,17 +9,24 @@ module Api
       end
 
       def create
-        @mobile_device = MobileDevice.new(mobile_device_params)
-        if @mobile_device.save
-          render json:{
-            message: "Device created successfully.",
-            mobile_device: @mobile_device
-          }, status: :created
-        else
+        #Verificando se não existe um mesmo imei de um aparelho sendo criado
+        if MobileDevice.exists?(imei: mobile_device_params[:imei])
           render json: {
-            message: "Error when registering Device.",
-            errors: @mobile_device.errors.full_messages
+            message: "Device with this IMEI already exists."
           }, status: :unprocessable_entity
+        else
+          @mobile_device = MobileDevice.new(mobile_device_params)
+          if @mobile_device.save
+            render json:{
+              message: "Device created successfully.",
+              mobile_device: @mobile_device
+            }, status: :created
+          else
+            render json: {
+              message: "Error when registering Device.",
+              errors: @mobile_device.errors.full_messages
+            }, status: :unprocessable_entity
+          end
         end
       end
 
