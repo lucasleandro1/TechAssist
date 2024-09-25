@@ -4,18 +4,24 @@ module Api
       before_action :authenticate_devise_api_token!
 
       def index
-        @tickets = Ticket.includes(mobile_device: :client).all
-        render json: @tickets.as_json(include: {
-          mobile_device: {
-            include: :client
-          }
-        })
+        instance_list = TicketManager::List.new.call
+
+        if instance_list[:success]
+          @tickets = instance_list[:resources]
+          render json: @tickets.as_json(include: {
+            mobile_device: {
+              include: :client
+            }
+          })
+        else
+          render json: instance_list, status: :unprocessable_entity
+        end
       end
 
       def create
-        if Ticket.exists?(mobile_device_id: ticket_params[:mobile_device_id], descricao: ticket_params[:descricao], status: ticket_params[:status])
+        if Ticket.exists?(mobile_device_id: ticket_params[:mobile_device_id], status: [0,1,2])
           render json: {
-            message: "Ticket already exists for this device with the same description and status."
+            message: "Ticket already exists for this device with the same status."
           }, status: :unprocessable_entity
         else
           @ticket = Ticket.new(parsed_params)
@@ -32,7 +38,7 @@ module Api
           end
         end
       end
-      
+
       def show
         @tickets = Ticket.includes(mobile_device: :client).find(params[:id])
         render json: @tickets.as_json(include: {
@@ -64,10 +70,10 @@ module Api
       def destroy
         @ticket = Ticket.find(params[:id])
         if @ticket.destroy
-          render json: {message: "Ticket deleted successfully."}, status: :ok 
+          render json: {message: "Ticket deleted successfully."}, status: :ok
         else
           render json: {message: "Error when deleting ticket.", errors: @ticket.errors.full_messages}, status: :unprocessable_entity    
-        end 
+        end
       end
 
       private

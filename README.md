@@ -23,7 +23,7 @@ Things you may want to cover:
 
 * ...
 
-Docker instruction 
+Docker instruction
 docker-compose build
 docker-compose up
 docker-compose run web rails db:create

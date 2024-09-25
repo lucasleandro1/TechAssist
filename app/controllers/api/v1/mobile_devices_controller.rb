@@ -4,8 +4,13 @@ module Api
       before_action :authenticate_devise_api_token!
 
       def index
-        @mobile_devices = MobileDevice.includes(:tickets).all
-        render json: @mobile_devices.as_json(include: :tickets)
+        instance_list = MobileDeviceManager::List.new.call
+        if instance_list[:sucess]
+          @mobile_device = instance_list[:resources]
+          render json: @mobile_devices.as_json(include: :tickets)
+        else
+          render json: instance_list, status: :unprocessable_entity
+        end
       end
 
       def create
