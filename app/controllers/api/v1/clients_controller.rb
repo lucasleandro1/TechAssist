@@ -4,33 +4,28 @@ module Api
       before_action :authenticate_devise_api_token!
 
       def index
-        @clients = Client.includes(mobile_devices: :tickets).all
-        render json: @clients.as_json(include: {
-          mobile_devices: {
-            include: :tickets
-          }
-        })
+        instance_list = ClientManager::List.new.call
+        if instance_list[:success]
+          @clients = instance_list[:resources]
+          render json: @clients.as_json(include: {
+            mobile_devices: {
+              include: :tickets
+            }
+          })
+        else
+          render json: instance_list, status: :unprocessable_entity
+        end
       end
 
       def create
-        #Verificando pelo cpf se já existe ou não um cliente com o mesmo cpf
-        if Client.exists?(cpf: client_params[:cpf])
-          render json: { message: "Client with this CPF already exists." }, status: :unprocessable_entity
+        creator_service = ClientManager::Creator.new(client_params)
+        result = creator_service.call
+        if result[:success]
+          render json: result[:resource], status: :created
         else
-          @client = Client.new(client_params)
-          if @client.save
-            render json: { 
-              message: "Client created successfully.", 
-              client: @client 
-              }, status: :created
-          else
-            render json: { message: "Error when registering client.", 
-            errors: @client.errors.full_messages 
-            }, status: :unprocessable_entity
-          end
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
-      
 
       def update
         @client = Client.find(params[:id])
