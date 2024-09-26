@@ -5,7 +5,6 @@ module Api
 
       def index
         instance_list = ClientManager::List.new.call
-
         if instance_list[:success]
           @clients = instance_list[:resources]
           render json: @clients.as_json(include: {

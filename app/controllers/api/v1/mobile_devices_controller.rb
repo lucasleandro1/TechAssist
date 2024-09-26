@@ -5,8 +5,8 @@ module Api
 
       def index
         instance_list = MobileDeviceManager::List.new.call
-        if instance_list[:sucess]
-          @mobile_device = instance_list[:resources]
+        if instance_list[:success]
+          @mobile_devices = instance_list[:resources]
           render json: @mobile_devices.as_json(include: :tickets)
         else
           render json: instance_list, status: :unprocessable_entity
@@ -14,25 +14,15 @@ module Api
       end
 
       def create
-        if MobileDevice.exists?(imei: mobile_device_params[:imei])
-          render json: {
-            message: "Device with this IMEI already exists."
-          }, status: :unprocessable_entity
+        creator_service = MobileDeviceManager::Creator.new(mobile_device_params)
+        result = creator_service.call
+        if result[:success]
+          render json: result[:resource], status: :created
         else
-          @mobile_device = MobileDevice.new(mobile_device_params)
-          if @mobile_device.save
-            render json:{
-              message: "Device created successfully.",
-              mobile_device: @mobile_device
-            }, status: :created
-          else
-            render json: {
-              message: "Error when registering Device.",
-              errors: @mobile_device.errors.full_messages
-            }, status: :unprocessable_entity
-          end
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
+
 
       def update
         @mobile_device = MobileDevice.find(params[:id])
