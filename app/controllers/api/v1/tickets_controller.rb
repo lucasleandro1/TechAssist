@@ -18,7 +18,7 @@ module Api
       end
 
       def create
-        creator = TicketManager::Creator.new(ticket_params, current_devise_api_user)
+        creator = TicketManager::Creator.new(ticket_params)
         result = creator.call
 
         if result[:success]
@@ -70,7 +70,7 @@ module Api
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
                                         :comentario, :sintoma, :anexo, :pecas,
-                                        :mobile_device_id)
+                                        :mobile_device_id).merge(user_id: current_devise_api_user.id)
       end
     end
   end
