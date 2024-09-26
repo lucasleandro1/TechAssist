@@ -23,7 +23,6 @@ module Api
         end
       end
 
-
       def update
         @mobile_device = MobileDevice.find(params[:id])
         if @mobile_device.update(mobile_device_params)

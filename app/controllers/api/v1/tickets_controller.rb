@@ -18,9 +18,9 @@ module Api
       end
 
       def create
-        creator = TicketManager::Creator.new(ticket_params, current_devise_api_user) # Altere aqui
+        creator = TicketManager::Creator.new(ticket_params, current_devise_api_user)
         result = creator.call
-    
+
         if result[:success]
           render json: result[:resource], status: :created
         else

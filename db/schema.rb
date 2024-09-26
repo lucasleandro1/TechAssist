@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_11_011300) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_23_192402) do
   create_table "clients", force: :cascade do |t|
     t.string "cpf"
     t.string "nome"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_011300) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["cpf"], name: "index_clients_on_cpf", unique: true
   end
 
   create_table "devise_api_tokens", force: :cascade do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_011300) do
     t.datetime "updated_at", null: false
     t.integer "client_id", null: false
     t.index ["client_id"], name: "index_mobile_devices_on_client_id"
+    t.index ["imei"], name: "index_mobile_devices_on_imei", unique: true
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -60,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_011300) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.integer "mobile_device_id", null: false
+    t.index ["mobile_device_id", "descricao", "status"], name: "Ticket unico pro aparelho", unique: true
     t.index ["mobile_device_id"], name: "index_tickets_on_mobile_device_id"
     t.index ["user_id"], name: "index_tickets_on_user_id"
   end

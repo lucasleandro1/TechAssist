@@ -6,7 +6,7 @@ class Ticket < ApplicationRecord
   enum pecas: { "Bateria" => 0, "Tela" => 1, "Placa Sub" => 2 }
   enum sintoma: { "Energia" => 0, "Software" => 1, "Hardware" => 2 }
 
-
   validates :data_abertura, :data_fechamento, :descricao, :status, :sintoma, presence: true
   validates :mobile_device_id, uniqueness: { scope: [:status], message: "Ticket already exists for this device with the same status." }
 end
+#O critério passado para determinar que um indice é único será ele ter a mesma descrição e status nesse exemplo passado
