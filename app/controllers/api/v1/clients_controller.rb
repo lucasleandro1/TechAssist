@@ -28,17 +28,12 @@ module Api
       end
 
       def update
-        @client = Client.find(params[:id])
-        if @client.update(client_params)
-          render json: {
-            message: "Client updated successfully.",
-            client: @client
-          }, status: :ok
+        update_service = ClientManager::Updater.new(params[:id], client_params)
+        result = update_service.call
+        if result[:success]
+          render json: result[:resource], status: :ok
         else
-          render json: {
-            message: "Error when updating client.",
-            errors: @client.errors.full_messages
-          }, status: :unprocessable_entity
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
 
@@ -56,12 +51,18 @@ module Api
       end
 
       def show
-        @clients = Client.includes(mobile_devices: :tickets).find(params[:id])
-        render json: @clients.as_json(include: {
-          mobile_devices: {
-            include: :tickets
-          }
-        })
+        instance_finder = ClientManager::Finder.new(params[:id])
+        result = instance_finder.call
+        if result[:success]
+          @client = result[:resources]
+          render json: @client.as_json(include: {
+            mobile_devices: {
+              include: :tickets
+            }
+          })
+        else
+          render json: result, status: :unprocessable_entity
+        end
       end
 
       def search
