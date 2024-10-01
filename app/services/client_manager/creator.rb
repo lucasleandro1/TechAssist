@@ -19,7 +19,7 @@ module ClientManager
     private
 
     def response(data)
-      { success: true, resource: data }
+      { success: true, message: "Client created"resource: data }
     end
 
     def response_error(error)

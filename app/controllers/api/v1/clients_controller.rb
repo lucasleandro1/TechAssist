@@ -7,11 +7,7 @@ module Api
         instance_list = ClientManager::List.new.call
         if instance_list[:success]
           @clients = instance_list[:resources]
-          render json: @clients.as_json(include: {
-            mobile_devices: {
-              include: :tickets
-            }
-          })
+          render json: @clients.as_json(include: { mobile_devices: {include: :tickets}})
         else
           render json: instance_list, status: :unprocessable_entity
         end
@@ -31,22 +27,19 @@ module Api
         update_service = ClientManager::Updater.new(params[:id], client_params)
         result = update_service.call
         if result[:success]
-          render json: result[:resource], status: :ok
+          render json: result[:message], status: :ok
         else
           render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
 
       def destroy
-        @client = Client.find(params[:id])
-        if @client.destroy
-          render json: {
-          }, status: :no_content
+        destroy_service = ClientManager::Destroyer.new(params[:id])
+        result = destroy_service.call
+        if result[:success]
+          render json: result[:message], status: :ok
         else
-          render json: {
-            message: "Error when deleting client.",
-            errors: @client.errors.full_messages
-          }, status: :unprocessable_entity
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
 
@@ -55,11 +48,7 @@ module Api
         result = instance_finder.call
         if result[:success]
           @client = result[:resources]
-          render json: @client.as_json(include: {
-            mobile_devices: {
-              include: :tickets
-            }
-          })
+          render json: @client.as_json(include: { mobile_devices: { include: :tickets }})
         else
           render json: result, status: :unprocessable_entity
         end

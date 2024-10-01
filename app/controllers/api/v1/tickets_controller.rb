@@ -20,7 +20,6 @@ module Api
       def create
         creator = TicketManager::Creator.new(ticket_params)
         result = creator.call
-
         if result[:success]
           render json: result[:resource], status: :created
         else
@@ -38,30 +37,28 @@ module Api
       end
 
       def update
-        @ticket = Ticket.find(params[:id])
-        if @ticket.update(ticket_params)
-          render json: { message: "Ticket updated successfully.", ticket: @ticket}, status: :ok
+        update_service = TicketManager::Updater.new(params[:id], ticket_params)
+        result = update_service.call
+        if result[:success]
+          render json: result[:message], status: :ok
         else
-          render json: {message: "Error when updating ticket.", errors: @ticket.errors.full_messages }, status: :unprocessable_entity
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
 
       def status
-        @status = params[:status]
-        @tickets = Ticket.includes(mobile_device: :client).where(status: @status)
-        render json: @tickets.as_json(include: {
-          mobile_device: {
-            include: :client
-          }
-        })
+        status_service = TicketManager::Status.new(params[:status])
+        tickets = status_service.call
+        render json: tickets, status: :ok
       end
 
       def destroy
-        @ticket = Ticket.find(params[:id])
-        if @ticket.destroy
-          render json: {message: "Ticket deleted successfully."}, status: :ok
+        destroy_service = TicketManager::Destroyer.new(params[:id])
+        result = destroy_service.call
+        if result[:success]
+          render json: result[:message], status: :ok
         else
-          render json: {message: "Error when deleting ticket.", errors: @ticket.errors.full_messages}, status: :unprocessable_entity    
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
 

@@ -18,7 +18,7 @@ module ClientManager
     private
 
     def response(data)
-      { success: true, resources: data }
+      { success: true, message: "Client updated.", resources: data }
     end
 
     def response_error(error)
@@ -26,10 +26,8 @@ module ClientManager
     end
 
     def scope
-      client = Client.find(client_id)
-      if client.update(client_params)
-        client
-      else
+      @client = Client.find(client_id)
+      unless @client.update(client_params)
         raise StandardError.new(client.errors.full_messages.to_sentence)
       end
     end

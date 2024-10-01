@@ -19,7 +19,7 @@ module MobileDeviceManager
     private
 
     def response(data)
-      { success: true, resource: data }
+      { success: true, message: "Device created.", resource: data }
     end
 
     def response_error(error)
