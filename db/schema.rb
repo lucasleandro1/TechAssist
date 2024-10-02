@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_23_192402) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.integer "mobile_device_id", null: false
-    t.index ["mobile_device_id", "descricao", "status"], name: "Ticket unico pro aparelho", unique: true
+    t.index ["mobile_device_id", "descricao", "status"], name: "Ticket unico por aparelho", unique: true
     t.index ["mobile_device_id"], name: "index_tickets_on_mobile_device_id"
     t.index ["user_id"], name: "index_tickets_on_user_id"
   end

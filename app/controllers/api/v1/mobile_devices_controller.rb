@@ -24,30 +24,22 @@ module Api
       end
 
       def update
-        @mobile_device = MobileDevice.find(params[:id])
-        if @mobile_device.update(mobile_device_params)
-          render json: {
-            message: "Device updated successfully.",
-            client: @mobile_device
-          }, status: :ok
+        update_service = MobileDeviceManager::Updater.new(params[:id], mobile_device_params)
+        result = update_service.call
+        if result[:success]
+          render json: result[:message], status: :ok
         else
-          render json: {
-            message: "Error when updating Device.",
-            errors: @mobile_device.errors.full_messages
-          }, status: :unprocessable_entity
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
 
       def destroy
-        @mobile_device = MobileDevice.find(params[:id])
-        if @mobile_device.destroy
-          render json: {
-          }, status: :no_content
+        destroy_service = MobileDeviceManager::Destroyer.new(params[:id])
+        result = destroy_service.call
+        if result[:success]
+          render json: result[:message], status: :ok
         else
-          render json: {
-            message: "Error when deleting Device.",
-            errors: @mobile_device.errors.full_messages
-          }, status: :unprocessable_entity
+          render json: { error: result[:error_message] }, status: :unprocessable_entity
         end
       end
 

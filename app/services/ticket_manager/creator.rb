@@ -1,10 +1,7 @@
 module TicketManager
   class Creator
-     attr_reader :ticket_params, :current_devise_api_user
-
-    def initialize(ticket_params, current_devise_api_user)
+    def initialize(ticket_params)
       @ticket_params = ticket_params
-      @current_devise_api_user = current_devise_api_user
     end
 
     def call
@@ -20,11 +17,11 @@ module TicketManager
     private
 
     def parsed_params
-      ticket_params.tap do |hash|
-        hash["sintoma"] = ticket_params["sintoma"].to_i
-        hash["pecas"] = ticket_params["pecas"].to_i
-        hash["status"] = ticket_params["status"].to_i
-        hash["user_id"] = current_devise_api_user.id
+      @ticket_params.tap do |hash|
+        hash["sintoma"] = @ticket_params["sintoma"].to_i
+        hash["pecas"] = @ticket_params["pecas"].to_i
+        hash["status"] = @ticket_params["status"].to_i
+        hash["user_id"] = @ticket_params["user_id"].to_i
       end
     end
 
@@ -37,7 +34,7 @@ module TicketManager
     end
 
     def ticket_exists
-      Ticket.exists?(mobile_device_id: ticket_params[:mobile_device_id], status: [0,1,2])
+      Ticket.exists?(mobile_device_id: @ticket_params[:mobile_device_id], status: [0,1,2])
     end
 
     def create_ticket
