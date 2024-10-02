@@ -28,12 +28,14 @@ module Api
       end
 
       def show
-        @tickets = Ticket.includes(mobile_device: :client).find(params[:id])
-        render json: @tickets.as_json(include: {
-          mobile_device: {
-            include: :client
-          }
-        })
+        instance_finder = TicketManager::Finder.new(params[:id])
+        result = instance_finder.call
+        if result[:success]
+          @ticket = result[:resources]
+          render json: @ticket.as_json(include: { mobile_device: { include: :client }})
+        else
+          render json: result, status: :unprocessable_entity
+        end
       end
 
       def update

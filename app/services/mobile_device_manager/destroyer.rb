@@ -15,7 +15,7 @@ module MobileDeviceManager
     private
 
     def response(data)
-      { success: true, mobile_device: "Device delete.", resource: data }
+      { success: true, message: "Device delete.", resource: data }
     end
 
     def response_error(error)

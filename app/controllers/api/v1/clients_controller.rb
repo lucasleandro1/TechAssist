@@ -54,12 +54,24 @@ module Api
         end
       end
 
+      # def search
+      #   if params[:q_cpf_cont].present?
+      #     @clients = Client.where('cpf LIKE ?', "%#{params[:q_cpf_cont]}%")
+      #     render json: @clients, status: :ok
+      #   else
+      #     render json: { message: "CPF query parameter is missing." }, status: :bad_request
+      #   end
+      # end
+
       def search
-        if params[:q_cpf_cont].present?
-          @clients = Client.where('cpf LIKE ?', "%#{params[:q_cpf_cont]}%")
-          render json: @clients, status: :ok
-        else
-          render json: { message: "CPF query parameter is missing." }, status: :bad_request
+        def search
+          service = ClientManager::Search.new(params)
+          result = service.call
+          if result[:error].present?
+            render json: { message: result[:error] }, status: result[:status]
+          else
+            render json: result[:clients], status: result[:status]
+          end
         end
       end
 
