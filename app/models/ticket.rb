@@ -3,7 +3,9 @@ class Ticket < ApplicationRecord
   belongs_to :user
 
   enum status: { "Pendente" => 0, "Em andamento" => 1, "Peça em transito" => 2, "Reparo concluído" => 3, "Pedido entregue" => 4 }
-  enum pecas: { "Bateria" => 0, "Tela" => 1, "Placa Sub" => 2 }
+  enum pecas: { "Bateria" => 0, "Tela" => 1, "Placa Sub" => 2, "Placa mãe" => 3,
+                "Camera" => 4, "Botão power" => 5, "Botão volume" => 6, "Microfone" => 7,
+                "Alto-falante"=> 8, "Tampa traseira" => 9 }
   enum sintoma: { "Energia" => 0, "Software" => 1, "Hardware" => 2 }
 
   validates :descricao, :status, :sintoma, presence: true
