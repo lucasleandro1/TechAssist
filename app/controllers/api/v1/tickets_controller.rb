@@ -32,21 +32,29 @@ module Api
         result = instance_finder.call
         if result[:success]
           @ticket = result[:resources]
-          render json: @ticket.as_json(include: { mobile_device: { include: :client }})
+          ticket_json = @ticket.as_json(include: { mobile_device: { include: :client }})
+          if @ticket.arquivo.attached?
+            ticket_json.merge!(arquivo: {
+              url: url_for(@ticket.arquivo),
+              filename: @ticket.arquivo.filename.to_s
+            })
+          end
+          render json: ticket_json
         else
           render json: result, status: :unprocessable_entity
         end
       end
 
       def update
-        update_service = TicketManager::Updater.new(params[:id], ticket_params)
-        result = update_service.call
-        if result[:success]
-          render json: result[:message], status: :ok
+        ticket = Ticket.find(params[:id])
+        if ticket.update(ticket_params)
+          ticket.update(data_fechamento: ticket.updated_at)
+          render json: ticket, status: :ok
         else
-          render json: { error: result[:error_message] }, status: :unprocessable_entity
+          render json: ticket.errors, status: :unprocessable_entity
         end
       end
+
 
       def status
         status_service = TicketManager::Status.new(params[:status])
@@ -68,9 +76,13 @@ module Api
 
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
-                                        :comentario, :sintoma, :anexo, :pecas,
-                                        :mobile_device_id).merge(user_id: current_devise_api_user.id)
+                                       :comentario, :sintoma, :anexo, :pecas,
+                                       :mobile_device_id, :arquivo)
+              .merge(user_id: current_devise_api_user.id,
+                     data_abertura: Time.current,
+                     data_fechamento: Time.current)
       end
+
     end
   end
 end
