@@ -33,11 +33,14 @@ module Api
         if result[:success]
           @ticket = result[:resources]
           ticket_json = @ticket.as_json(include: { mobile_device: { include: :client }})
-          if @ticket.arquivo.attached?
-            ticket_json.merge!(arquivo: {
-              url: url_for(@ticket.arquivo),
-              filename: @ticket.arquivo.filename.to_s
-            })
+          if @ticket.arquivos.attached?
+            anexos = @ticket.arquivos.map do |arquivo|
+              {
+                url: url_for(arquivo),
+                filename: arquivo.filename.to_s
+              }
+            end
+            ticket_json.merge!(arquivos: anexos)
           end
           render json: ticket_json
         else
@@ -77,7 +80,7 @@ module Api
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
                                        :comentario, :sintoma, :anexo, :pecas,
-                                       :mobile_device_id, :arquivo)
+                                       :mobile_device_id, arquivos: [])
               .merge(user_id: current_devise_api_user.id,
                      data_abertura: Time.current,
                      data_fechamento: Time.current)
