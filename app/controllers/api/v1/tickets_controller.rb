@@ -51,13 +51,17 @@ module Api
       def update
         ticket = Ticket.find(params[:id])
         if ticket.update(ticket_params)
-          ticket.update(data_fechamento: ticket.updated_at)
+          if ticket.status == "Pedido entregue"
+            ticket.data_fechamento = Time.current
+            ticket.save
+          else
+            ticket.data_fechamento = nil
+          end
           render json: ticket, status: :ok
         else
           render json: ticket.errors, status: :unprocessable_entity
         end
       end
-
 
       def status
         status_service = TicketManager::Status.new(params[:status])
@@ -80,12 +84,8 @@ module Api
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
                                        :comentario, :sintoma, :anexo, :pecas,
-                                       :mobile_device_id, arquivos: [])
-              .merge(user_id: current_devise_api_user.id,
-                     data_abertura: Time.current,
-                     data_fechamento: Time.current)
+                                       :mobile_device_id, arquivos: []).merge(user_id: current_devise_api_user.id)
       end
-
     end
   end
 end

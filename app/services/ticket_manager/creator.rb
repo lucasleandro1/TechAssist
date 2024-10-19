@@ -39,8 +39,8 @@ module TicketManager
 
     def create_ticket
       ticket = Ticket.new(parsed_params)
+      ticket.data_abertura = Time.current
       if ticket.save
-        ticket.update(data_abertura: ticket.created_at)
         ticket
       else
         raise StandardError.new(ticket.errors.full_messages.to_sentence)
