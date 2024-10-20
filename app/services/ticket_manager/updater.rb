@@ -9,10 +9,6 @@ module TicketManager
 
     def call
       response(scope)
-      if ticket.status == "Pedido entregue"
-        ticket.data_fechamento = Time.current
-        ticket.save
-      end
     rescue ActiveRecord::RecordNotFound => e
       response_error("mobile_device not found: #{e.message}")
     rescue StandardError => error

@@ -54,6 +54,8 @@ gem "pry-remote"
 
 gem 'simple_form'
 
+gem 'prawn'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
