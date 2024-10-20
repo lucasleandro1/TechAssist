@@ -26,8 +26,8 @@ module TicketManager
     end
 
     def scope
-      @ticket = Ticket.find(ticket_id)
-      unless @ticket.update(ticket_params)
+      ticket = Ticket.find(ticket_id)
+      unless ticket.update(ticket_params)
         raise StandardError.new(ticket.errors.full_messages.to_sentence)
       end
     end

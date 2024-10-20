@@ -6,4 +6,3 @@ class MobileDevice < ApplicationRecord
   validates :client_id, :imei, :serial, :modelo, :marca, presence: true
   validates :imei, uniqueness: true
 end
-#Garantindo que o imei seja único para cada aparelho

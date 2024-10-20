@@ -34,11 +34,12 @@ module TicketManager
     end
 
     def ticket_exists
-      Ticket.exists?(mobile_device_id: @ticket_params[:mobile_device_id], status: [0,1,2])
+      Ticket.exists?(mobile_device_id: @ticket_params[:mobile_device_id], status: [0,1,2,3])
     end
 
     def create_ticket
       ticket = Ticket.new(parsed_params)
+      ticket.data_abertura = Time.current
       if ticket.save
         ticket
       else
