@@ -16,9 +16,9 @@ module ClientManager
 
     def search_clients
       cpf = normalize_cpf(@params[:q_cpf_cont])
-      clients = Client.where(cpf: cpf)
-      if clients.any?
-        { clients: clients, status: :ok }
+      client = Client.find_by(cpf: cpf)
+      if client.present?
+        { clients: [client], status: :ok }
       else
         { error: "No clients found with the provided CPF.", status: :not_found }
       end
