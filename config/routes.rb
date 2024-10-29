@@ -7,11 +7,9 @@ Rails.application.routes.draw do
       resources :tickets do
         collection do
           get 'status/:status', to: 'tickets#status', as: :status
-          resources :tickets, only: [] do
-            member do
-              get 'generate_pdf'
-            end
-          end
+        end
+        member do
+          get 'generate_pdf'
         end
       end
       resources :clients
