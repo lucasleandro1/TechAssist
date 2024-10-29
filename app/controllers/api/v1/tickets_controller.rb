@@ -7,11 +7,14 @@ module Api
         instance_list = TicketManager::List.new.call
         if instance_list[:success]
           @tickets = instance_list[:resources]
-          render json: @tickets.as_json(include: {
-            mobile_device: {
-              include: :client
-            }
-          })
+          tickets_with_names = @tickets.map do |ticket|
+            ticket.as_json(include: {
+              mobile_device: {
+                include: :client
+              }
+            })
+          end
+          render json: tickets_with_names
         else
           render json: instance_list, status: :unprocessable_entity
         end
@@ -83,7 +86,7 @@ module Api
         pdf.text "Nome do Cliente: #{@ticket.mobile_device.client.nome}"
         pdf.text "Data de abertura de OS: #{@ticket.data_abertura}"
         pdf.text "Ordem de serviço: #{@ticket.id}"
-        pdf.text "Modelo do aparelho: #{@ticket.marca}"
+        pdf.text "Modelo do aparelho: #{@ticket.mobile_device.modelo}"
         pdf.text "Peças a serem trocadas: #{@ticket.pecas}"
         pdf.text "Custo do Reparo: R$ #{@ticket.repair_price}"
 
@@ -104,8 +107,8 @@ module Api
 
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
-                                       :comentario, :sintoma, :anexo, :pecas, :repair_price,
-                                       :mobile_device_id, arquivos: []).merge(user_id: current_devise_api_user.id)
+                                       :comentario, :sintoma, :anexo, :repair_price,
+                                       :mobile_device_id, arquivos: [],pecas: []).merge(user_id: current_devise_api_user.id)
       end
     end
   end

@@ -19,7 +19,7 @@ module TicketManager
     def parsed_params
       @ticket_params.tap do |hash|
         hash["sintoma"] = @ticket_params["sintoma"].to_i
-        hash["pecas"] = @ticket_params["pecas"].to_i
+        hash["pecas"] = @ticket_params["pecas"].to_a
         hash["status"] = @ticket_params["status"].to_i
         hash["user_id"] = @ticket_params["user_id"].to_i
       end
