@@ -30,7 +30,7 @@ RSpec.describe Ticket, type: :model do
   context 'métodos de classe e instância' do
     describe '#close_ticket' do
       it 'fecha o ticket e define a data de fechamento' do
-        ticket = Ticket.create(user: user, mobile_device: device, status: 'Pendente', sintoma: 'Energia', descricao: 'problema na bateria')
+        ticket = Ticket.create(user: user, mobile_device: device, status: 'Pedido entregue', sintoma: 'Energia', descricao: 'problema na bateria')
         ticket.close_ticket
         expect(ticket.status).to eq('Pedido entregue')
         expect(ticket.data_fechamento).not_to be_nil
