@@ -55,14 +55,12 @@ module Api
       end
 
       def search
-        def search
-          service = ClientManager::Search.new(params)
-          result = service.call
-          if result[:error].present?
-            render json: { message: result[:error] }, status: result[:status]
-          else
-            render json: result[:clients], status: result[:status]
-          end
+        service = ClientManager::Search.new(params)
+        result = service.call
+        if result[:error].present?
+          render json: { message: result[:error] }, status: result[:status]
+        else
+          render json: result[:clients], status: result[:status]
         end
       end
 
