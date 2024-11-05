@@ -56,7 +56,7 @@ gem 'simple_form'
 
 gem 'prawn'
 
-gem 'rack-cors', require: 'rack/cors'
+gem 'rack-cors'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
