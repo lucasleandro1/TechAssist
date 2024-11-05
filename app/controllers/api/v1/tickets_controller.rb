@@ -54,7 +54,7 @@ module Api
       def update
         ticket = Ticket.find(params[:id])
         if ticket.update(ticket_params)
-          ticket.close_ticket if ticket.status == 'Pedido entregue' # Chama close_ticket apenas se o status for 'Pedido entregue'
+          ticket.close_ticket if ticket.status == 'Pedido entregue'
           render json: ticket, status: :ok
         else
           render json: ticket.errors, status: :unprocessable_entity
@@ -108,7 +108,7 @@ module Api
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
                                        :comentario, :sintoma, :anexo, :repair_price,
-                                       :mobile_device_id, arquivos: [],pecas: []).merge(user_id: current_devise_api_user.id)
+                                       :mobile_device_id, arquivos: [], pecas: []).merge(user_id: current_devise_api_user.id)
       end
     end
   end
