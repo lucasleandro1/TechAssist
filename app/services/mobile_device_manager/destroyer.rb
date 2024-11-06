@@ -15,7 +15,7 @@ module MobileDeviceManager
     private
 
     def response(data)
-      { success: true, message: "Device delete.", resource: data }
+      { success: true, message: I18n.t("activerecord.errors.messages.device_delete"), resource: data }
     end
 
     def response_error(error)

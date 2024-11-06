@@ -6,7 +6,7 @@ module TicketManager
 
     def call
       if ticket_exists
-        response_error("Ticket already exists for this device with the same status.")
+        response_error(I18n.t("activerecord.errors.messages.ticket_already_exists_device_status"))
       else
         response(create_ticket)
       end
@@ -26,7 +26,7 @@ module TicketManager
     end
 
     def response(data)
-      { success: true, resource: data }
+      { success: true, message: I18n.t("activerecord.errors.messages.ticket_created"),resource: data }
     end
 
     def response_error(error)

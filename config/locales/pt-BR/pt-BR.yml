@@ -7,6 +7,9 @@ pt-BR:
         cpf_blank: "CPF em branco"
         clients_notfound_cpf: "Cliente não encontrado com esse CPF"
         device_already_exists_IMEI: "Aparelho já existe com esse IMEI"
+        device_notfound: "Aparelho não encontrado"
+        ticket_already_exists_device_status: "Já existe um ticket para este dispositivo com o mesmo status"
+        ticket_notfound: "Ticket não encontrado"
     models:
       client:
         attributes:
@@ -22,4 +25,10 @@ pt-BR:
       client_created: "Cliente criado com sucesso"
       client_delete: "Cliente deletado com sucesso"
       client_updated: "Cliente atualizado com sucesso"
+      device_created: "Aparelho criado com sucesso"
+      device_delete: "Aparelho deletado"
+      device_updated: "Aparelho atualizado"
+      ticket_created: "Ticket criado com sucesso"
+      ticket_delete: "Ticket deletado com sucesso"
+      ticket_updated: "Ticket atualizado com sucesso"
 

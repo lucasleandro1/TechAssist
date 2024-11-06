@@ -33,11 +33,33 @@ en:
   activerecord:
     errors:
       messages:
-        client_exists: "Client exists"
+        client_exists: "Client already exists with this CPF"
+        client_notfound: "Client not found"
+        cpf_blank: "CPF is blank"
+        clients_notfound_cpf: "Client not found with this CPF"
+        device_already_exists_IMEI: "Device already exists with this IMEI"
+        device_notfound: "Device not found"
+        ticket_already_exists_device_status: "A ticket already exists for this device with the same status"
+        ticket_notfound: "Ticket not found"
     models:
       client:
         attributes:
+          nome:
+            blank: "can't be blank"
           cpf:
-            blank: "não pode ficar em branco"
+            blank: "can't be blank"
+          telefone:
+            blank: "can't be blank"
+          email:
+            blank: "can't be blank"
     messages:
-      client_created: "Cliente criado com sucesso"
+      client_created: "Client successfully created"
+      client_delete: "Client successfully deleted"
+      client_updated: "Client successfully updated"
+      device_created: "Device successfully created"
+      device_delete: "Device successfully deleted"
+      device_updated: "Device successfully updated"
+      ticket_created: "Ticket successfully created"
+      ticket_delete: "Ticket successfully deleted"
+      ticket_updated: "Ticket successfully updated"
+
