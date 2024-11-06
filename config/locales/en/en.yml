@@ -30,4 +30,14 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      messages:
+        client_exists: "Client exists"
+    models:
+      client:
+        attributes:
+          cpf:
+            blank: "não pode ficar em branco"
+    messages:
+      client_created: "Cliente criado com sucesso"

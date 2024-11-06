@@ -1,0 +1,25 @@
+pt-BR:
+  activerecord:
+    errors:
+      messages:
+        client_exists: "Cliente já existe com este CPF"
+        client_notfound: "Cliente não encontrado "
+        cpf_blank: "CPF em branco"
+        clients_notfound_cpf: "Cliente não encontrado com esse CPF"
+        device_already_exists_IMEI: "Aparelho já existe com esse IMEI"
+    models:
+      client:
+        attributes:
+          nome:
+            blank: "não pode ficar em branco"
+          cpf:
+            blank: "não pode ficar em branco"
+          telefone:
+            blank: "não pode ficar em branco"
+          email:
+            blank: "não pode ficar em branco"
+    messages:
+      client_created: "Cliente criado com sucesso"
+      client_delete: "Cliente deletado com sucesso"
+      client_updated: "Cliente atualizado com sucesso"
+
