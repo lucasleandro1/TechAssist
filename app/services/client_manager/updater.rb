@@ -10,7 +10,7 @@ module ClientManager
     def call
       response(scope)
     rescue ActiveRecord::RecordNotFound => e
-      response_error("Client not found: #{e.message}")
+      response_error(I18n.t("activerecord.errors.messages.client_notfound: #{e.message}"))
     rescue StandardError => error
       response_error(error)
     end
@@ -18,7 +18,7 @@ module ClientManager
     private
 
     def response(data)
-      { success: true, message: "Client updated.", resources: data }
+      { success: true, message: I18n.t("activerecord.errors.messages.client_update."), resources: data }
     end
 
     def response_error(error)

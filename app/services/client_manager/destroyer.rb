@@ -15,7 +15,7 @@ module ClientManager
     private
 
     def response(data)
-      { success: true, message: "Client delete.",resource: data }
+      { success: true, message: I18n.t("activerecord.errors.messages.client_delete"),resource: data }
     end
 
     def response_error(error)

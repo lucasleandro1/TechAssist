@@ -10,7 +10,7 @@ module TicketManager
     def call
       response(scope)
     rescue ActiveRecord::RecordNotFound => e
-      response_error("mobile_device not found: #{e.message}")
+      response_error(I18n.t("activerecord.errors.messages.ticket_notfound #{e.message}"))
     rescue StandardError => error
       response_error(error)
     end
@@ -18,7 +18,7 @@ module TicketManager
     private
 
     def response(data)
-      { success: true, message: "Ticket updated.", resources: data }
+      { success: true, message: I18n.t("activerecord.errors.messages.ticket_updated"), resources: data }
     end
 
     def response_error(error)

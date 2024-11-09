@@ -8,7 +8,7 @@ module ClientManager
       if @params[:q_cpf_cont].present?
         search_clients
       else
-        { error: "CPF query parameter is missing.", status: :bad_request }
+        { error: I18n.t("activerecord.errors.messages.cpf_blank"), status: :bad_request }
       end
     end
 
@@ -20,7 +20,7 @@ module ClientManager
       if client.present?
         { clients: [client], status: :ok }
       else
-        { error: "No clients found with the provided CPF.", status: :not_found }
+        { error: I18n.t("activerecord.errors.messages.clients_notfound_cpf"), status: :not_found }
       end
     end
 

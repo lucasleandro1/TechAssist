@@ -37,7 +37,7 @@ module Api
         destroy_service = ClientManager::Destroyer.new(params[:id])
         result = destroy_service.call
         if result[:success]
-          render json: result[:message], status: :ok
+          render json: result[:messages], status: :ok
         else
           render json: { error: result[:error_message] }, status: :unprocessable_entity
         end

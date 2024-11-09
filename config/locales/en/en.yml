@@ -1,0 +1,87 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   "true": "foo"
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+en:
+  activerecord:
+    errors:
+      messages:
+        client_exists: "Client already exists with this CPF"
+        client_notfound: "Client not found"
+        cpf_blank: "CPF is blank"
+        clients_notfound_cpf: "Client not found with this CPF"
+        device_already_exists_IMEI: "Device already exists with this IMEI"
+        device_notfound: "Device not found"
+        ticket_already_exists_device_status: "A ticket already exists for this device with the same status"
+        ticket_notfound: "Ticket not found"
+    models:
+      client:
+        attributes:
+          nome:
+            blank: "can't be blank"
+          cpf:
+            blank: "can't be blank"
+          telefone:
+            blank: "can't be blank"
+          email:
+            blank: "can't be blank"
+      mobile_device:
+        attributes:
+          client_id:
+            blank: "can't be blank"
+          imei:
+            blank: "can't be blank"
+          modelo:
+            blank: "can't be blank"
+          serial:
+            blank: "can't be blank"
+          marca:
+            blank: "can't be blank"
+      ticket:
+        attributes:
+          descricao:
+            blank: "can't be blank"
+          status:
+            blank: "can't be blank"
+          sintoma:
+            blank: "can't be blank"
+          mobile_device_id:
+            blank: "can't be blank"
+    messages:
+      client_created: "Client successfully created"
+      client_delete: "Client successfully deleted"
+      client_updated: "Client successfully updated"
+      device_created: "Device successfully created"
+      device_delete: "Device successfully deleted"
+      device_updated: "Device successfully updated"
+      ticket_created: "Ticket successfully created"
+      ticket_delete: "Ticket successfully deleted"
+      ticket_updated: "Ticket successfully updated"
+

@@ -333,6 +333,7 @@ DEPENDENCIES
   devise
   devise-api!
   dry-core (~> 1.0.1)
+  i18n
   importmap-rails
   jbuilder
   prawn

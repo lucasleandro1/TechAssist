@@ -8,18 +8,18 @@ module ClientManager
 
     def call
       if client_exists
-        response_error("Client already exists with this CPF")
+        response_error(I18n.t("activerecord.errors.messages.client_exists"))
       else
         response(create_client)
       end
     rescue StandardError => error
-      response_error(error)
+      response_error(error.message)
     end
 
     private
 
     def response(data)
-      { success: true, message: "Client created.", resource: data }
+      { success: true, message: I18n.t("activerecord.errors.messages.client_created"), resource: data }
     end
 
     def response_error(error)

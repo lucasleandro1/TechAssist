@@ -8,7 +8,7 @@ module MobileDeviceManager
 
     def call
       if mobile_device_exists
-        response_error("Device already exists with this IMEI")
+        response_error(I18n.t("activerecord.errors.messages.device_already_exists_IMEI"))
       else
         response(create_mobile_device)
       end
@@ -19,7 +19,7 @@ module MobileDeviceManager
     private
 
     def response(data)
-      { success: true, message: "Device created.", resource: data }
+      { success: true, message: I18n.t("activerecord.errors.messages.device_created"), resource: data }
     end
 
     def response_error(error)
