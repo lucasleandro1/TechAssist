@@ -52,6 +52,28 @@ en:
             blank: "can't be blank"
           email:
             blank: "can't be blank"
+      mobile_device:
+        attributes:
+          client_id:
+            blank: "can't be blank"
+          imei:
+            blank: "can't be blank"
+          modelo:
+            blank: "can't be blank"
+          serial:
+            blank: "can't be blank"
+          marca:
+            blank: "can't be blank"
+      ticket:
+        attributes:
+          descricao:
+            blank: "can't be blank"
+          status:
+            blank: "can't be blank"
+          sintoma:
+            blank: "can't be blank"
+          mobile_device_id:
+            blank: "can't be blank"
     messages:
       client_created: "Client successfully created"
       client_delete: "Client successfully deleted"

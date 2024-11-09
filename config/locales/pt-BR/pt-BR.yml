@@ -21,6 +21,28 @@ pt-BR:
             blank: "não pode ficar em branco"
           email:
             blank: "não pode ficar em branco"
+      mobile_device:
+        attributes:
+          client_id:
+            blank: "não pode ficar em branco"
+          imei:
+            blank: "não pode ficar em branco"
+          modelo:
+            blank: "não pode ficar em branco"
+          serial:
+            blank: "não pode ficar em branco"
+          marca:
+            blank: "não pode ficar em branco"
+      ticket:
+        attributes:
+          descricao:
+            blank: "não pode ficar em branco"
+          status:
+            blank: "não pode ficar em branco"
+          sintoma:
+            blank: "não pode ficar em branco"
+          mobile_device_id:
+            blank: "não pode ficar em branco"
     messages:
       client_created: "Cliente criado com sucesso"
       client_delete: "Cliente deletado com sucesso"
