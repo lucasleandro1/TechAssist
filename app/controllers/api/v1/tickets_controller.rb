@@ -77,16 +77,23 @@ module Api
         end
       end
 
+      def received
+        total_received = Setting.first.total_received
+        render json: { total_received: total_received }, status: :ok
+      end
 
       def generate_pdf
         pdf = Prawn::Document.new
-        pdf.text "Orçamento de Reparo", size: 30, style: :bold
+        pdf.text "Orçamento do Reparo", size: 30, style: :bold
         pdf.move_down 20
 
         pdf.text "Nome do Cliente: #{@ticket.mobile_device.client.nome}"
+        pdf.text "CPF: #{@ticket.mobile_device.client.cpf}"
         pdf.text "Data de abertura de OS: #{@ticket.data_abertura}"
         pdf.text "Ordem de serviço: #{@ticket.id}"
         pdf.text "Modelo do aparelho: #{@ticket.mobile_device.modelo}"
+        pdf.text "Modelo do aparelho: #{@ticket.mobile_device.marca}"
+
         pdf.text "Peças a serem trocadas: #{@ticket.pecas}"
         pdf.text "Custo do Reparo: R$ #{@ticket.repair_price}"
 

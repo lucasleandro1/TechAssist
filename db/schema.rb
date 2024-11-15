@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_29_225327) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_15_163034) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -77,6 +77,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_225327) do
     t.index ["imei"], name: "index_mobile_devices_on_imei", unique: true
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.decimal "total_received"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tickets", force: :cascade do |t|
     t.date "data_abertura"
     t.date "data_fechamento"
@@ -90,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_225327) do
     t.integer "mobile_device_id", null: false
     t.decimal "repair_price", precision: 10, scale: 2
     t.text "pecas"
+    t.decimal "received"
     t.index ["mobile_device_id", "descricao", "status"], name: "Ticket unico por aparelho", unique: true
     t.index ["mobile_device_id"], name: "index_tickets_on_mobile_device_id"
     t.index ["user_id"], name: "index_tickets_on_user_id"
