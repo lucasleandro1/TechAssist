@@ -7,23 +7,33 @@ module TicketManager
     end
 
     def call
-      response(scope)
-    rescue StandardError => error
-      response_error(error)
+      ticket = find_ticket
+      return { success: false, message: "Ticket não encontrado" } unless ticket
+
+      ticket_json = format_ticket(ticket)
+      ticket_json.merge!(add_attachments(ticket)) if ticket.arquivos.attached?
+
+      { success: true, resources: ticket_json }
     end
 
     private
 
-    def response(data)
-      { success: true, resources: data }
+    def find_ticket
+      Ticket.find_by(id: @ticket_id)
     end
 
-    def response_error(error)
-      { success: false, error_message: error.message }
+    def format_ticket(ticket)
+      ticket.as_json(include: { mobile_device: { include: :client } })
     end
 
-    def scope
-      Ticket.includes(mobile_device: :client).find(ticket_id)
+    def add_attachments(ticket)
+      anexos = ticket.arquivos.map do |arquivo|
+        {
+          url: Rails.application.routes.url_helpers.rails_blob_url(arquivo, host: "http://localhost:3000"),
+          filename: arquivo.filename.to_s
+        }
+      end
+      { arquivos: anexos }
     end
   end
 end

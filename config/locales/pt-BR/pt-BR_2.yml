@@ -1,0 +1,45 @@
+pt-BR:
+  activerecord:
+    errors:
+      messages:
+        client_exists: "Cliente já existe com este CPF"
+        client_notfound: "Cliente não encontrado"
+        cpf_blank: "CPF em branco"
+        clients_notfound_cpf: "Cliente não encontrado com esse CPF"
+        device_already_exists_IMEI: "Aparelho já existe com esse IMEI"
+        device_notfound: "Aparelho não encontrado"
+        ticket_already_exists_device_status: "Já existe um ticket para este dispositivo com o mesmo status"
+        ticket_notfound: "Ticket não encontrado"
+    models:
+      client: 
+        attributes:
+          nome: "Nome"
+          cpf: "CPF"
+          telefone: "Telefone"
+          email: "Email"
+      mobile_device:
+        attributes:
+          client_id: "Cliente"
+          imei: "IMEI"
+          modelo: "Modelo"
+          serial: "Número de Série"
+          marca: "Marca"
+      ticket:
+        attributes:
+          descricao: "Descrição"
+          status: "Status"
+          sintoma: "Sintoma"
+          mobile_device_id: "Dispositivo"
+  messages:
+    client_created: "Cliente criado com sucesso"
+    client_delete: "Cliente deletado com sucesso"
+    client_updated: "Cliente atualizado com sucesso"
+    device_created: "Aparelho criado com sucesso"
+    device_delete: "Aparelho deletado"
+    device_updated: "Aparelho atualizado"
+    ticket_created: "Ticket criado com sucesso"
+    ticket_delete: "Ticket deletado com sucesso"
+    ticket_updated: "Ticket atualizado com sucesso"
+    record_invalid:
+      one: "Registro inválido"
+      other: "%{count} registros inválidos"

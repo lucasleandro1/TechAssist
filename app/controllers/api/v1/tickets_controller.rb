@@ -31,30 +31,19 @@ module Api
       end
 
       def show
-        instance_finder = TicketManager::Finder.new(params[:id])
-        result = instance_finder.call
+        service = TicketManager::Finder.new(params[:id])
+        result = service.call
         if result[:success]
-          @ticket = result[:resources]
-          ticket_json = @ticket.as_json(include: { mobile_device: { include: :client }})
-          if @ticket.arquivos.attached?
-            anexos = @ticket.arquivos.map do |arquivo|
-              {
-                url: url_for(arquivo),
-                filename: arquivo.filename.to_s
-              }
-            end
-            ticket_json.merge!(arquivos: anexos)
-          end
-          render json: ticket_json
+          render json: result[:resources]
         else
-          render json: result, status: :unprocessable_entity
+          render json: { error: result[:message] }, status: :unprocessable_entity
         end
       end
 
       def update
         ticket = Ticket.find(params[:id])
         if ticket.update(ticket_params)
-          ticket.close_ticket if ticket.status == 'Pedido entregue'
+          ticket.close_ticket if ticket.status == 'Pedido entregue' || "Pedido reprovado entregue"
           render json: ticket, status: :ok
         else
           render json: ticket.errors, status: :unprocessable_entity
@@ -77,26 +66,17 @@ module Api
         end
       end
 
+      def received
+        total_received = Setting.first.total_received
+        render json: { total_received: total_received }, status: :ok
+      end
 
       def generate_pdf
-        pdf = Prawn::Document.new
-        pdf.text "Orçamento de Reparo", size: 30, style: :bold
-        pdf.move_down 20
-
-        pdf.text "Nome do Cliente: #{@ticket.mobile_device.client.nome}"
-        pdf.text "Data de abertura de OS: #{@ticket.data_abertura}"
-        pdf.text "Ordem de serviço: #{@ticket.id}"
-        pdf.text "Modelo do aparelho: #{@ticket.mobile_device.modelo}"
-        pdf.text "Peças a serem trocadas: #{@ticket.pecas}"
-        pdf.text "Custo do Reparo: R$ #{@ticket.repair_price}"
-
-        pdf.move_down 30
-        pdf.text "Técnico responsavel: #{@ticket.user.email}"
-        pdf.text "Data: #{Time.current.strftime('%d/%m/%Y')}"
-
-        send_data pdf.render, filename: "orcamento_ticket_#{@ticket.id}.pdf",
-                              type: "application/pdf",
-                              disposition: "inline"
+        ticket = Ticket.find(params[:id])
+        pdf_data = TicketManager::PdfGenerator.new(ticket).generate
+        send_data pdf_data, filename: "orcamento_ticket_#{ticket.id}.pdf",
+                            type: "application/pdf",
+                            disposition: "inline"
       end
 
       private
@@ -107,7 +87,7 @@ module Api
 
       def ticket_params
         params.require(:ticket).permit(:data_abertura, :data_fechamento, :descricao, :status,
-                                       :comentario, :sintoma, :anexo, :repair_price,
+                                       :comentario, :sintoma, :repair_price,
                                        :mobile_device_id, arquivos: [], pecas: []).merge(user_id: current_devise_api_user.id)
       end
     end
