@@ -3,5 +3,6 @@ class Client < ApplicationRecord
 
   validates :nome, :cpf, :email, :telefone, presence: true
   validates :cpf, uniqueness: true
+  belongs_to :user
 end
 

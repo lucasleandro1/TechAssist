@@ -34,7 +34,7 @@ module TicketManager
     end
 
     def ticket_exists
-      Ticket.exists?(mobile_device_id: @ticket_params[:mobile_device_id], status: [0,1,2,3])
+      Ticket.exists?(mobile_device_id: @ticket_params[:mobile_device_id], status: [0,1,2,5,6,7])
     end
 
     def create_ticket
