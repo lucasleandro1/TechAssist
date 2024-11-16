@@ -67,7 +67,7 @@ module Api
       private
 
       def client_params
-        params.require(:client).permit(:cpf,:nome,:telefone,:email).merge(user_id: current_devise_api_user.id)
+        params.require(:client).permit(:cpf,:nome,:telefone,:email)
       end
 
     end
