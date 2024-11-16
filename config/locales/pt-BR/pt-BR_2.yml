@@ -11,7 +11,7 @@ pt-BR:
         ticket_already_exists_device_status: "Já existe um ticket para este dispositivo com o mesmo status"
         ticket_notfound: "Ticket não encontrado"
     models:
-      client: 
+      client:
         attributes:
           nome: "Nome"
           cpf: "CPF"
