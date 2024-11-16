@@ -2,8 +2,19 @@ module Api
   module V1
     class ClientsController < ApplicationController
       before_action :authenticate_devise_api_token!
+           
 
-      def index
+
+
+
+
+
+
+
+
+
+      
+      def index 
         instance_list = ClientManager::List.new.call
         if instance_list[:success]
           @clients = instance_list[:resources]
