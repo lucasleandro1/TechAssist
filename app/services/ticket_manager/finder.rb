@@ -8,7 +8,7 @@ module TicketManager
 
     def call
       ticket = find_ticket
-      return { success: false, message: "Ticket não encontrado" } unless ticket
+      return { success: false, message: I18n.t("activerecord.errors.messages.ticket_notfound") } unless ticket 
 
       ticket_json = format_ticket(ticket)
       ticket_json.merge!(add_attachments(ticket)) if ticket.arquivos.attached?

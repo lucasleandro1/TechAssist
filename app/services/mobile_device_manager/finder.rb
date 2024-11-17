@@ -1,5 +1,5 @@
 module MobileDeviceManager
-  class Destroyer
+  class Finder
     attr_reader :mobile_device_id
 
     def initialize(mobile_device_id)
@@ -15,18 +15,15 @@ module MobileDeviceManager
     private
 
     def response(data)
-      { success: true, message: I18n.t("activerecord.messages.device_delete"), resource: data }
+      { success: true, resources: data }
     end
 
     def response_error(error)
-      { success: false, error_message: error }
+      { success: false, error_message: error.message }
     end
 
     def scope
-      @mobile_device = MobileDevice.find(mobile_device_id)
-      unless @mobile_device.destroy
-        raise StandardError.new(mobile_device.errors.full_messages.to_sentence)
-      end
+      MobileDevice.includes(:client, :tickets).find(mobile_device_id)
     end
   end
 end
