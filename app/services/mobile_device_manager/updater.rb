@@ -18,7 +18,7 @@ module MobileDeviceManager
     private
 
     def response(data)
-      { success: true, message: I18n.t("activerecord.errors.messages.device_updated"), resources: data }
+      { success: true, message: I18n.t("activerecord.messages.device_updated"), resources: data }
     end
 
     def response_error(error)

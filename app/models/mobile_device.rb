@@ -1,6 +1,5 @@
 class MobileDevice < ApplicationRecord
   belongs_to :client
-  belongs_to :user
   has_many :tickets, dependent: :destroy
 
 

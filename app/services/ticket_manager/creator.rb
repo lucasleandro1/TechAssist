@@ -6,7 +6,7 @@ module TicketManager
 
     def call
       if ticket_exists
-        response_error(I18n.t("activerecord.errors.messages.ticket_already_exists_device_status"))
+        response_error(I18n.t("activerecord.erros.messages.ticket_already_exists_device_status"))
       else
         response(create_ticket)
       end
@@ -26,7 +26,7 @@ module TicketManager
     end
 
     def response(data)
-      { success: true, message: I18n.t("activerecord.errors.messages.ticket_created"),resource: data }
+      { success: true, message: I18n.t("activerecord.messages.ticket_created"),resource: data }
     end
 
     def response_error(error)
@@ -34,7 +34,7 @@ module TicketManager
     end
 
     def ticket_exists
-      Ticket.exists?(mobile_device_id: @ticket_params[:mobile_device_id], status: [0,1,2,5,6,7])
+      Ticket.exists?(mobile_device_id: @ticket_params[:mobile_device_id], status: [0,1,2,3,5,6])
     end
 
     def create_ticket

@@ -18,7 +18,7 @@ module TicketManager
     private
 
     def response(data)
-      { success: true, message: I18n.t("activerecord.errors.messages.ticket_updated"), resources: data }
+      { success: true, message: I18n.t("activerecord.messages.ticket_updated"), resources: data }
     end
 
     def response_error(error)

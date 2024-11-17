@@ -8,7 +8,7 @@ module ClientManager
 
     def call
       if client_exists
-        response_error(I18n.t("activerecord.errors.messages.client_exists"))
+        response_error(message: I18n.t("activerecord.errors.messages.client_exists"))
       else
         response(create_client)
       end

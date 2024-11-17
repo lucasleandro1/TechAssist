@@ -7,7 +7,7 @@ module Api
         instance_list = ClientManager::List.new.call
         if instance_list[:success]
           @clients = instance_list[:resources]
-          render json: @clients.as_json(include: { mobile_devices: {include: :tickets}})
+          render json: @clients.as_json(include: {mobile_devices: { only: [:id, :marca, :modelo], include: {tickets: { only: [:id, :status, :created_at]}}}})
         else
           render json: instance_list, status: :unprocessable_entity
         end
@@ -48,7 +48,8 @@ module Api
         result = instance_finder.call
         if result[:success]
           @client = result[:resources]
-          render json: @client.as_json(include: { mobile_devices: { include: :tickets }})
+          render json: @client.as_json(include: {
+            mobile_devices: { only: [:id, :marca, :modelo], include: {tickets: { only: [:id, :status, :created_at]}}}})
         else
           render json: result, status: :unprocessable_entity
         end
@@ -67,7 +68,7 @@ module Api
       private
 
       def client_params
-        params.require(:client).permit(:cpf,:nome,:telefone,:email).merge(user_id: current_devise_api_user.id)
+        params.require(:client).permit(:cpf,:nome,:telefone,:email)
       end
 
     end

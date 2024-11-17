@@ -1,11 +1,11 @@
 module TicketManager
-  class Count
+  class Received
     attr_reader :status
 
     def initialize(status)
       @status = status
     end
-    
+
     def call
       if [2, 5, 6, 7].include?(status)
         calculate_paid_repair

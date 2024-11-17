@@ -20,7 +20,7 @@ module ClientManager
       if client.present?
         { clients: [client], status: :ok }
       else
-        { error: I18n.t("activerecord.errors.messages.clients_notfound_cpf"), status: :not_found }
+        { error: I18n.t("activerecord.errors.messages.client_notfound_cpf"), status: :not_found }
       end
     end
 

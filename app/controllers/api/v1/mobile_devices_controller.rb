@@ -23,6 +23,20 @@ module Api
         end
       end
 
+      def show
+        instance_finder = MobileDeviceManager::Finder.new(params[:id])
+        result = instance_finder.call
+        if result[:success]
+          @mobile_device = result[:resources]
+          render json: @mobile_device.as_json(include: {
+            client: { only: [:id, :nome, :cpf] },
+            tickets: { only: [:id, :status, :created_at] }
+          })
+        else
+          render json: result, status: :unprocessable_entity
+        end
+      end
+
       def update
         update_service = MobileDeviceManager::Updater.new(params[:id], mobile_device_params)
         result = update_service.call
@@ -46,7 +60,7 @@ module Api
       private
 
       def mobile_device_params
-        params.require(:mobile_device).permit(:imei,:serial,:modelo,:marca,:client_id)
+        params.require(:mobile_device).permit(:imei, :serial, :modelo, :marca, :client_id)
       end
     end
   end
