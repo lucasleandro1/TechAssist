@@ -5,6 +5,8 @@ databases:
     plan: free
 
 services:
+  - type: redis
+    name: redis-sidekiq
     plan: free
     region: oregon
     maxmemoryPolicy: noeviction
@@ -14,7 +16,7 @@ services:
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
-    startCommand: rails s
+    startCommand: bundle exec rails s -d -p 10000 & bundle exec sidekiq -q default
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -24,5 +26,10 @@ services:
         sync: false
       - key: WEB_CONCURRENCY
         value: 4
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: redis-sidekiq
+          property: connectionString
       - key: PORT
         value: 10000
