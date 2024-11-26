@@ -5,8 +5,6 @@ databases:
     plan: free
 
 services:
-  - type: redis
-    name: redis-sidekiq
     plan: free
     region: oregon
     maxmemoryPolicy: noeviction
@@ -26,10 +24,5 @@ services:
         sync: false
       - key: WEB_CONCURRENCY
         value: 4
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: redis-sidekiq
-          property: connectionString
       - key: PORT
         value: 10000
