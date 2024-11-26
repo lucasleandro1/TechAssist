@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :mobile_devices
       root to: "home#index"
       get 'search_clients', to: 'clients#search', as: 'search_clients'
+      get 'search_mobile_devices', to: 'mobile_devices#search', as: 'search_mobile_devices'
     end
   end
 end

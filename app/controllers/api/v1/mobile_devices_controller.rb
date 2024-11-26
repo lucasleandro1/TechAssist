@@ -57,6 +57,18 @@ module Api
         end
       end
 
+      def search
+        service = MobileDeviceManager::Search.new(params)
+        result = service.call
+        if result[:error].present?
+          render json: { message: result[:error] }, status: result[:status]
+        else
+          @mobile_device = result[:mobile_device]
+          render json: @mobile_device.as_json(include: {
+            client: { only: [:id, :nome, :cpf]}})
+        end
+      end
+
       private
 
       def mobile_device_params
