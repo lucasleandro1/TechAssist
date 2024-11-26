@@ -14,7 +14,7 @@ services:
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
-    startCommand: bundle exec rails s -d -p 10000 & bundle exec -q default
+    startCommand: rails s
     envVars:
       - key: DATABASE_URL
         fromDatabase:
