@@ -5,16 +5,12 @@ databases:
     plan: free
 
 services:
-    plan: free
-    region: oregon
-    maxmemoryPolicy: noeviction
-    ipAllowList: []
   - type: web
     name: app_web
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
-    startCommand: bundle exec rails s -d -p 10000 & bundle exec sidekiq -q default
+    startCommand: bundle exec rails s
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -24,5 +20,3 @@ services:
         sync: false
       - key: WEB_CONCURRENCY
         value: 4
-      - key: PORT
-        value: 10000
