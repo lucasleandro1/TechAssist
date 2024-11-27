@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  root to: 'api/v1/home#index'
-  devise_for :users
+root to: 'api/v1/home#index'
 
   namespace :api do
     namespace :v1 do
+      devise_for :users
       resources :tickets do
         collection do
           get 'status/:status', to: 'tickets#status', as: :status
