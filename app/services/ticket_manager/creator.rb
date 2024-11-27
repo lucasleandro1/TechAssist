@@ -6,7 +6,7 @@ module TicketManager
 
     def call
       if ticket_exists
-        response_error(I18n.t("activerecord.erros.messages.ticket_already_exists_device_status"))
+        response_error(message: I18n.t("activerecord.errors.messages.ticket_already_exists_device_status"))
       else
         response(create_ticket)
       end
@@ -22,6 +22,7 @@ module TicketManager
         hash["pecas"] = @ticket_params["pecas"].to_a
         hash["status"] = @ticket_params["status"].to_i
         hash["user_id"] = @ticket_params["user_id"].to_i
+        hash["repair_price"] = @ticket_params["repair_price"].to_i
       end
     end
 

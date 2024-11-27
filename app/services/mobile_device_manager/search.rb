@@ -8,7 +8,7 @@ module MobileDeviceManager
       if @params[:q_imei_cont].present?
         search_imei
       else
-        { error: I18n.t("activerecord.errors.messages.imei_blank"), status: :bad_request }
+        { message: I18n.t("activerecord.errors.messages.imei_blank"), status: :bad_request }
       end
     end
 
@@ -20,7 +20,7 @@ module MobileDeviceManager
       if mobile_device.present?
         { mobile_device: [mobile_device], status: :ok }
       else
-        { error: I18n.t("activerecord.errors.messages.mobile_notfound_imei"), status: :not_found }
+        { message: I18n.t("activerecord.errors.messages.mobile_notfound_imei"), status: :not_found }
       end
     end
 

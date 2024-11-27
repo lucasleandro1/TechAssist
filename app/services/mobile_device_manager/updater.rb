@@ -10,7 +10,7 @@ module MobileDeviceManager
     def call
       response(scope)
     rescue ActiveRecord::RecordNotFound => e
-      response_error(I18n.t("activerecord.errors.messages.device_notfound #{e.message}"))
+      response_error( message: I18n.t("activerecord.errors.messages.device_notfound #{e.message}"))
     rescue StandardError => error
       response_error(error)
     end

@@ -17,7 +17,7 @@ module AssisTech
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-    # set_locate_configs_and_timezone #pt-BR
+    set_locate_configs_and_timezone #pt-BR
     # Configuration for the application, engines, and railties goes here.
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies

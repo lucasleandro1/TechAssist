@@ -11,15 +11,19 @@ module TicketManager
 
       pdf.text "Nome do Cliente: #{@ticket.mobile_device.client.nome}"
       pdf.text "CPF: #{@ticket.mobile_device.client.cpf}"
+      pdf.move_down 10
+
       pdf.text "Data de abertura de OS: #{@ticket.data_abertura}"
       pdf.text "Ordem de serviço: #{@ticket.id}"
+      pdf.move_down 10
+
       pdf.text "Modelo do aparelho: #{@ticket.mobile_device.modelo}"
       pdf.text "Marca do aparelho: #{@ticket.mobile_device.marca}"
       pecas_nomes = @ticket.pecas.map { |indice| Ticket::PECAS.key(indice) }.compact
       pdf.text "Peças a serem trocadas: #{pecas_nomes.join(', ')}"
       pdf.text "Custo do Reparo: R$ #{@ticket.repair_price}"
 
-      pdf.move_down 30
+      pdf.move_down 20
       pdf.text "Técnico responsável: #{extract_name(@ticket.user.email)}"
       pdf.text "Data: #{Time.current.strftime('%d/%m/%Y')}"
 
