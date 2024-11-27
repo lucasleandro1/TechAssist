@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-
+  root to: 'api/v1/home#index'
+  devise_for :users
 
   namespace :api do
     namespace :v1 do
-      devise_for :users
       resources :tickets do
         collection do
           get 'status/:status', to: 'tickets#status', as: :status
@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       end
       resources :clients
       resources :mobile_devices
-      root to: "home#index"
       get 'search_clients', to: 'clients#search', as: 'search_clients'
       get 'search_mobile_devices', to: 'mobile_devices#search', as: 'search_mobile_devices'
     end
