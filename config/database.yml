@@ -23,8 +23,8 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV.fetch("POSTGRES_DB") { "app_production" } %>
-  username: <%= ENV.fetch("POSTGRES_USER") { "postgres" } %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") { "postgres" } %>
-  host: <%= ENV.fetch("POSTGRES_HOST") { "localhost" } %>
+  database: <%= ENV.fetch("POSTGRES_DB") { "app_production_88a4" } %>
+  username: <%= ENV.fetch("POSTGRES_USER") { "app_production_88a4_user" } %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") { "xI5T0EqFLjSPn9oOkYEhyTPanIJirTFE" } %>
+  host: <%= ENV.fetch("POSTGRES_HOST") { "dpg-ct38lddumphs73dppmfg-a" } %>
   port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
