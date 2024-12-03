@@ -1,5 +1,0 @@
-class RemoveReceivedFromSettings < ActiveRecord::Migration[7.0]
-  def change
-    remove_column :settings, :received, :decimal
-  end
-end
