@@ -23,8 +23,4 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: app_production_88a4
-  username: app_production_88a4_user
-  password: xI5T0EqFLjSPn9oOkYEhyTPanIJirTFE
-  host: dpg-ct38lddumphs73dppmfg-a
   port: 5432
