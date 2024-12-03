@@ -1,7 +1,7 @@
 databases:
-  - name: app_database
-    databaseName: app_prod
-    user: app_db
+  - name: app_production_88a4
+    databaseName: app_production_88a4
+    user: app_production_88a4_user
     plan: free
 
 services:
@@ -10,7 +10,7 @@ services:
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
-    startCommand: bundle exec rails s
+    startCommand: rails db:create rails db:migrate bundle exec rails s
     envVars:
       - key: DATABASE_URL
         fromDatabase:
