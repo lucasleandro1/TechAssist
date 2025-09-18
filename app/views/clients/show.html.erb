@@ -1,0 +1,109 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1><%= @client.nome %></h1>
+  <div>
+    <%= link_to 'Editar', edit_client_path(@client), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', clients_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Informações do Cliente</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-sm-4"><strong>Nome:</strong></div>
+          <div class="col-sm-8"><%= @client.nome %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4"><strong>CPF:</strong></div>
+          <div class="col-sm-8"><%= @client.cpf %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4"><strong>Email:</strong></div>
+          <div class="col-sm-8"><%= @client.email %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-4"><strong>Telefone:</strong></div>
+          <div class="col-sm-8"><%= @client.telefone %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Dispositivos (<%= @client.mobile_devices.count %>)</h5>
+        <%= link_to 'Novo Dispositivo', new_mobile_device_path(client_id: @client.id), 
+            class: 'btn btn-sm btn-primary' %>
+      </div>
+      <div class="card-body">
+        <% if @client.mobile_devices.any? %>
+          <% @client.mobile_devices.each do |device| %>
+            <div class="card mb-2">
+              <div class="card-body">
+                <h6 class="card-title"><%= "#{device.marca} #{device.modelo}" %></h6>
+                <p class="card-text small text-muted">
+                  IMEI: <%= device.imei %><br>
+                  Serial: <%= device.serial %>
+                </p>
+                <div class="d-flex justify-content-between">
+                  <span class="badge bg-info">
+                    <%= device.tickets.count %> tickets
+                  </span>
+                  <%= link_to 'Ver', device, class: 'btn btn-sm btn-outline-primary' %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-muted">Nenhum dispositivo cadastrado para este cliente.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @client.mobile_devices.joins(:tickets).any? %>
+  <div class="card">
+    <div class="card-header">
+      <h5>Tickets Recentes</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Dispositivo</th>
+              <th>Status</th>
+              <th>Data Abertura</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @client.mobile_devices.joins(:tickets).includes(:tickets)
+                      .map(&:tickets).flatten.sort_by(&:created_at).reverse.first(10).each do |ticket| %>
+              <tr>
+                <td><%= ticket.id %></td>
+                <td><%= "#{ticket.mobile_device.marca} #{ticket.mobile_device.modelo}" %></td>
+                <td>
+                  <span class="badge bg-<%= status_color(ticket.status) %>">
+                    <%= ticket.status %>
+                  </span>
+                </td>
+                <td><%= ticket.data_abertura&.strftime('%d/%m/%Y') %></td>
+                <td>
+                  <%= link_to 'Ver', ticket, class: 'btn btn-sm btn-outline-primary' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

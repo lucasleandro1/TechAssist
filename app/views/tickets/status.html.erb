@@ -1,25 +1,59 @@
-<h1>Tickets <%= @status %></h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Tickets - <%= @status %></h1>
+  <div>
+    <%= link_to 'Voltar', tickets_path, class: 'btn btn-secondary' %>
+    <%= link_to 'Novo Ticket', new_ticket_path, class: 'btn btn-primary' %>
+  </div>
+</div>
 
-<% if @tickets.any? %>
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">OS</th>
-      <th scope="col">Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tickets.each do |ticket| %>
-      <tr>
-        <th scope="row"><%= ticket.id %></th>
-        <td>
-          <%= link_to 'Editar', edit_ticket_path(ticket), class: 'btn btn-primary btn-sm' %>
-        </td>
-      </tr>
+<div class="card">
+  <div class="card-header">
+    <h3>
+      <span class="badge bg-<%= status_color(@status) %> me-2"><%= @status %></span>
+      (<%= @tickets.count %> tickets)
+    </h3>
+  </div>
+  <div class="card-body">
+    <% if @tickets.any? %>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Dispositivo</th>
+              <th>Sintoma</th>
+              <th>Data Abertura</th>
+              <th>Valor Reparo</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tickets.each do |ticket| %>
+              <tr>
+                <td><%= ticket.id %></td>
+                <td><%= ticket.mobile_device.client.nome %></td>
+                <td><%= "#{ticket.mobile_device.marca} #{ticket.mobile_device.modelo}" %></td>
+                <td><%= ticket.sintoma %></td>
+                <td><%= ticket.data_abertura&.strftime('%d/%m/%Y') %></td>
+                <td><%= number_to_currency(ticket.repair_price) if ticket.repair_price %></td>
+                <td>
+                  <%= link_to 'Ver', ticket, class: 'btn btn-sm btn-outline-primary' %>
+                  <%= link_to 'Editar', edit_ticket_path(ticket), class: 'btn btn-sm btn-outline-secondary' %>
+                  <%= link_to 'Excluir', ticket, method: :delete, 
+                      confirm: 'Tem certeza?', class: 'btn btn-sm btn-outline-danger' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="text-center py-5">
+        <p class="text-muted">Nenhum ticket encontrado com o status "<%= @status %>"</p>
+        <%= link_to 'Criar Primeiro Ticket', new_ticket_path, class: 'btn btn-primary' %>
+      </div>
     <% end %>
-  </tbody>
-</table>
-<% else %>
-  <p>Não há tickets com este status fsdsfgs.</p>
-<% end %>
+  </div>
+</div>
 
