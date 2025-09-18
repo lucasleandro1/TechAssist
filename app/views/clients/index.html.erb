@@ -1,2 +1,70 @@
 
-<%=render "form"%>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Clientes</h1>
+  <%= link_to 'Novo Cliente', new_client_path, class: 'btn btn-primary' %>
+</div>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <%= form_with url: search_clients_path, method: :get, local: true, class: "row g-3" do |f| %>
+      <div class="col-md-8">
+        <%= f.text_field :q_cpf_cont, value: params[:q_cpf_cont], 
+            placeholder: "Digite o CPF para pesquisar", class: "form-control" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.submit "Pesquisar", class: "btn btn-outline-primary w-100" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h3>Lista de Clientes (<%= @clients.count %>)</h3>
+  </div>
+  <div class="card-body">
+    <% if @clients.any? %>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Dispositivos</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @clients.each do |client| %>
+              <tr>
+                <td><%= client.nome %></td>
+                <td><%= client.cpf %></td>
+                <td><%= client.email %></td>
+                <td><%= client.telefone %></td>
+                <td>
+                  <span class="badge bg-info">
+                    <%= client.mobile_devices.count %> dispositivos
+                  </span>
+                </td>
+                <td>
+                  <%= link_to 'Ver', client, class: 'btn btn-sm btn-outline-primary' %>
+                  <%= link_to 'Editar', edit_client_path(client), class: 'btn btn-sm btn-outline-secondary' %>
+                  <%= link_to 'Excluir', client, method: :delete, 
+                      confirm: 'Tem certeza? Isso excluirá todos os dispositivos e tickets associados.', 
+                      class: 'btn btn-sm btn-outline-danger' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="text-center py-5">
+        <p class="text-muted">Nenhum cliente encontrado</p>
+        <%= link_to 'Cadastrar Primeiro Cliente', new_client_path, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

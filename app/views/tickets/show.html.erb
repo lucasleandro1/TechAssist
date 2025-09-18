@@ -1,0 +1,134 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Ticket #<%= @ticket.id %></h1>
+  <div>
+    <%= link_to 'Editar', edit_ticket_path(@ticket), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', tickets_path, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Informações do Ticket</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Status:</strong>
+            <span class="badge bg-<%= status_color(@ticket.status) %> ms-2">
+              <%= @ticket.status %>
+            </span>
+          </div>
+          <div class="col-md-6">
+            <strong>Sintoma:</strong> <%= @ticket.sintoma %>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Data de Abertura:</strong> <%= @ticket.data_abertura&.strftime('%d/%m/%Y') %>
+          </div>
+          <div class="col-md-6">
+            <strong>Data de Fechamento:</strong> 
+            <%= @ticket.data_fechamento&.strftime('%d/%m/%Y') || 'Não fechado' %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <strong>Valor do Reparo:</strong> 
+            <%= @ticket.repair_price ? number_to_currency(@ticket.repair_price) : 'Não informado' %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <strong>Descrição:</strong>
+          <p class="mt-2"><%= simple_format(@ticket.descricao) %></p>
+        </div>
+
+        <% if @ticket.comentario.present? %>
+          <div class="mb-3">
+            <strong>Comentário:</strong>
+            <p class="mt-2"><%= simple_format(@ticket.comentario) %></p>
+          </div>
+        <% end %>
+
+        <% if @ticket.pecas.any? %>
+          <div class="mb-3">
+            <strong>Peças:</strong>
+            <div class="mt-2">
+              <% @ticket.pecas.each do |peca_index| %>
+                <span class="badge bg-info me-1">
+                  <%= Ticket::PECAS.key(peca_index) %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @ticket.arquivos.any? %>
+      <div class="card">
+        <div class="card-header">
+          <h5>Arquivos Anexados</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <% @ticket.arquivos.each do |arquivo| %>
+              <div class="col-md-4 mb-3">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <% if arquivo.content_type.start_with?('image/') %>
+                      <%= image_tag arquivo, class: 'img-fluid mb-2', style: 'max-height: 150px;' %>
+                    <% else %>
+                      <i class="fas fa-file fa-3x mb-2"></i>
+                    <% end %>
+                    <p class="card-text small"><%= arquivo.filename %></p>
+                    <%= link_to 'Download', arquivo, class: 'btn btn-sm btn-outline-primary' %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h5>Informações do Cliente e Dispositivo</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <strong>Cliente:</strong>
+          <p class="mb-1"><%= @ticket.mobile_device.client.nome %></p>
+          <small class="text-muted">
+            CPF: <%= @ticket.mobile_device.client.cpf %><br>
+            Email: <%= @ticket.mobile_device.client.email %><br>
+            Telefone: <%= @ticket.mobile_device.client.telefone %>
+          </small>
+        </div>
+
+        <hr>
+
+        <div class="mb-3">
+          <strong>Dispositivo:</strong>
+          <p class="mb-1"><%= "#{@ticket.mobile_device.marca} #{@ticket.mobile_device.modelo}" %></p>
+          <small class="text-muted">
+            IMEI: <%= @ticket.mobile_device.imei %><br>
+            Serial: <%= @ticket.mobile_device.serial %>
+          </small>
+        </div>
+
+        <div class="d-grid gap-2">
+          <%= link_to 'Ver Cliente', @ticket.mobile_device.client, class: 'btn btn-outline-primary' %>
+          <%= link_to 'Ver Dispositivo', @ticket.mobile_device, class: 'btn btn-outline-info' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
