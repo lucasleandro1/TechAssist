@@ -43,7 +43,7 @@ module Api
       def update
         ticket = Ticket.find(params[:id])
         if ticket.update(ticket_params)
-          ticket.close_ticket if ticket.status == "Pedido entregue" || "Pedido reprovado entregue"
+          ticket.close_ticket if ticket.status == "Pedido entregue" || ticket.status == "Pedido reprovado entregue"
           render json: ticket, status: :ok
         else
           render json: ticket.errors, status: :unprocessable_entity

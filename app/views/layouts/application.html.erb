@@ -13,10 +13,9 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
   <body>
-    <%=render "shared/topbar"%>
-    <main class="container">
-    <%# <%= render partial: 'shared/flash_message'%>
-    <%= yield %>
+    <%= render "shared/topbar" %>
+    <main class="container-fluid">
+      <%= yield %>
     </main>
   </body>
 </html>

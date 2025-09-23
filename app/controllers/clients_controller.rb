@@ -1,34 +1,59 @@
 class ClientsController < ApplicationController
+  before_action :set_client, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @clients = Client.all
+  end
+
+  def show
+  end
+
+  def new
+    @client = Client.new
+  end
+
+  def create
+    @client = Client.new(client_params)
+    
+    if @client.save
+      redirect_to @client, notice: 'Cliente criado com sucesso.'
+    else
+      render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @client.update(client_params)
+      redirect_to @client, notice: 'Cliente atualizado com sucesso.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @client.destroy
+    redirect_to clients_url, notice: 'Cliente removido com sucesso.'
+  end
+
   def search
     if params[:q_cpf_cont].present?
-      # Buscar via API
-      response = api_request("GET", "/api/v1/search_clients", { q_cpf_cont: params[:q_cpf_cont] })
-      @clients = response.is_a?(Array) ? response : []
+      @clients = Client.where("cpf LIKE ?", "%#{params[:q_cpf_cont]}%")
     else
-      @clients = []
+      @clients = Client.all
     end
+    render :index
   end
 
   private
 
-  def api_request(method, path, params = {})
-    require 'net/http'
-    require 'json'
-    
-    uri = URI("http://localhost:3001#{path}")
-    uri.query = URI.encode_www_form(params) if method == "GET" && params.any?
-    
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = case method
-              when "GET"
-                Net::HTTP::Get.new(uri)
-              when "POST"
-                Net::HTTP::Post.new(uri)
-                request.body = params.to_json
-                request["Content-Type"] = "application/json"
-              end
-    
-    response = http.request(request)
-    JSON.parse(response.body) rescue []
+  def set_client
+    @client = Client.find(params[:id])
+  end
+
+  def client_params
+    params.require(:client).permit(:nome, :cpf, :email, :telefone)
   end
 end
