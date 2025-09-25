@@ -19,7 +19,8 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket_params.merge(user_id: current_user&.id || 1))
     
     if @ticket.save
-      redirect_to @ticket, notice: 'Ticket criado com sucesso.'
+      flash[:notice] = 'Ticket criado com sucesso.'
+      redirect_to @ticket
     else
       @mobile_devices = MobileDevice.includes(:client).all
       render :new
@@ -33,7 +34,8 @@ class TicketsController < ApplicationController
   def update
     if @ticket.update(ticket_params)
       @ticket.close_ticket if @ticket.status == "Pedido entregue" || @ticket.status == "Pedido reprovado entregue"
-      redirect_to @ticket, notice: 'Ticket atualizado com sucesso.'
+      flash[:notice] = 'Ticket atualizado com sucesso.'
+      redirect_to @ticket
     else
       @mobile_devices = MobileDevice.includes(:client).all
       render :edit

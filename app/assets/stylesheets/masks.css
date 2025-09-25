@@ -1,0 +1,37 @@
+/* Estilos para campos com máscaras */
+.cpf-mask, .phone-mask {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+
+/* Indicador visual para campos obrigatórios com máscara */
+.cpf-mask:required, .phone-mask:required {
+  border-left: 3px solid #007bff;
+}
+
+/* Estilo para campos com máscara quando válidos */
+.cpf-mask:valid, .phone-mask:valid {
+  border-left: 3px solid #28a745;
+}
+
+/* Estilo para campos com máscara quando inválidos */
+.cpf-mask:invalid, .phone-mask:invalid {
+  border-left: 3px solid #dc3545;
+}
+
+/* Animação suave para mudanças de estado */
+.cpf-mask, .phone-mask {
+  transition: border-left 0.3s ease;
+}
+
+/* Placeholder mais sutil */
+.cpf-mask::placeholder, .phone-mask::placeholder {
+  color: #6c757d;
+  opacity: 0.7;
+}
+
+/* Foco nos campos com máscara */
+.cpf-mask:focus, .phone-mask:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-color: #007bff;
+}

@@ -17,13 +17,13 @@ Rails.application.routes.draw do
   
   resources :clients do
     collection do
-      get :search
+      get :search, as: :search_clients
     end
   end
   
   resources :mobile_devices do
     collection do
-      get :search
+      get :search, as: :search_mobile_devices
     end
   end
 

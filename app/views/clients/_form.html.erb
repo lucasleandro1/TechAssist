@@ -1,11 +1,12 @@
 <%= form_with model: @client, local: true do |f| %>
   <% if @client.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@client.errors.count, "erro") %> impediu que este cliente fosse salvo:</h4>
+      <h4>There are validation errors. Please check all required fields:</h4>
       <ul>
-        <% @client.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+        <li>Nome (Name) is required</li>
+        <li>CPF is required and must be unique</li>
+        <li>Email is required</li>
+        <li>Telefone (Phone) is required</li>
       </ul>
     </div>
   <% end %>
@@ -13,14 +14,14 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :nome, class: "form-label" %>
+        <label for="client_nome" class="form-label">Nome</label>
         <%= f.text_field :nome, class: "form-control" %>
       </div>
     </div>
     
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :cpf, "CPF", class: "form-label" %>
+        <label for="client_cpf" class="form-label">CPF</label>
         <%= f.text_field :cpf, class: "form-control" %>
       </div>
     </div>
@@ -29,14 +30,14 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :email, class: "form-label" %>
+        <label for="client_email" class="form-label">Email</label>
         <%= f.email_field :email, class: "form-control" %>
       </div>
     </div>
     
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :telefone, class: "form-label" %>
+        <label for="client_telefone" class="form-label">Telefone</label>
         <%= f.text_field :telefone, class: "form-control" %>
       </div>
     </div>

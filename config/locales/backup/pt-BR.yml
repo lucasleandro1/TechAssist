@@ -1,0 +1,101 @@
+pt-BR:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'A validação falhou: %{errors}'
+        restrict_dependent_destroy:
+          has_one: Não é possível excluir o registro pois existe um %{record} dependente
+          has_many: Não é possível excluir o registro pois existem %{record} dependentes
+        blank: "não pode ficar em branco"
+        present: "deve ficar em branco"
+        confirmation: "não é igual a %{attribute}"
+        accepted: "deve ser aceito"
+        empty: "não pode ficar vazio"
+        equal_to: "deve ser igual a %{count}"
+        even: "deve ser par"
+        exclusion: "não está disponível"
+        greater_than: "deve ser maior que %{count}"
+        greater_than_or_equal_to: "deve ser maior ou igual a %{count}"
+        inclusion: "não está incluído na lista"
+        invalid:
+          one: "não é válido"
+          other: "não é válido"
+        length:
+          is: "não possui o tamanho esperado (%{count} caracteres)"
+          minimum:
+            one: "é muito curto (mínimo: 1 caracter)"
+            other: "é muito curto (mínimo: %{count} caracteres)"
+          maximum:
+            one: "é muito longo (máximo: 1 caracter)"
+            other: "é muito longo (máximo: %{count} caracteres)"
+          within: "não possui o tamanho esperado (%{count} caracteres)"
+          wrong_length:
+            one: "não possui o tamanho esperado (1 caracter)"
+            other: "não possui o tamanho esperado (%{count} caracteres)"
+        less_than: "deve ser menor que %{count}"
+        less_than_or_equal_to: "deve ser menor ou igual a %{count}"
+        not_a_number: "não é um número"
+        not_an_integer: "não é um número inteiro"
+        odd: "deve ser ímpar"
+        other_than: "deve ser diferente de %{count}"
+        taken: "já está em uso"
+        too_long:
+          one: "é muito longo (máximo: 1 caracter)"
+          other: "é muito longo (máximo: %{count} caracteres)"
+        too_short:
+          one: "é muito curto (mínimo: 1 caracter)"
+          other: "é muito curto (mínimo: %{count} caracteres)"
+        wrong_length:
+          one: "não possui o tamanho esperado (1 caracter)"
+          other: "não possui o tamanho esperado (%{count} caracteres)"
+    models:
+      client:
+        attributes:
+          nome: "Nome"
+          cpf: "CPF"
+          telefone: "Telefone"
+          email: "Email"
+      mobile_device:
+        attributes:
+          client_id: "Cliente"
+          imei: "IMEI"
+          modelo: "Modelo"
+          serial: "Número de Série"
+          marca: "Marca"
+      ticket:
+        attributes:
+          descricao: "Descrição"
+          status: "Status"
+          sintoma: "Sintoma"
+          mobile_device_id: "Dispositivo"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: "deve ser aceito"
+      blank: "não pode ficar em branco"
+      confirmation: "não é igual a %{attribute}"
+      empty: "não pode ficar vazio"
+      equal_to: "deve ser igual a %{count}"
+      even: "deve ser par"
+      exclusion: "não está disponível"
+      greater_than: "deve ser maior que %{count}"
+      greater_than_or_equal_to: "deve ser maior ou igual a %{count}"
+      inclusion: "não está incluído na lista"
+      invalid: "não é válido"
+      less_than: "deve ser menor que %{count}"
+      less_than_or_equal_to: "deve ser menor ou igual a %{count}"
+      not_a_number: "não é um número"
+      not_an_integer: "não é um número inteiro"
+      odd: "deve ser ímpar"
+      other_than: "deve ser diferente de %{count}"
+      present: "deve ficar em branco"
+      taken: "já está em uso"
+      too_long:
+        one: "é muito longo (máximo: 1 caracter)"
+        other: "é muito longo (máximo: %{count} caracteres)"
+      too_short:
+        one: "é muito curto (mínimo: 1 caracter)"
+        other: "é muito curto (mínimo: %{count} caracteres)"
+      wrong_length:
+        one: "não possui o tamanho esperado (1 caracter)"
+        other: "não possui o tamanho esperado (%{count} caracteres)"

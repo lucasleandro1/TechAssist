@@ -41,7 +41,7 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <%= form_with url: search_clients_path, method: :get, local: true, class: "px-3 py-2" do |f| %>
+              <%= form_with url: search_clients_clients_path, method: :get, local: true, class: "px-3 py-2" do |f| %>
                 <div class="mb-2">
                   <%= f.text_field :q_cpf_cont, placeholder: "CPF do cliente", class: "form-control form-control-sm" %>
                 </div>
@@ -50,7 +50,7 @@
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <%= form_with url: search_mobile_devices_path, method: :get, local: true, class: "px-3 py-2" do |f| %>
+              <%= form_with url: search_mobile_devices_mobile_devices_path, method: :get, local: true, class: "px-3 py-2" do |f| %>
                 <div class="mb-2">
                   <%= f.text_field :q_imei_cont, placeholder: "IMEI do dispositivo", class: "form-control form-control-sm" %>
                 </div>

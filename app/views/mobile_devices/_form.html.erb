@@ -1,11 +1,13 @@
 <%= form_with model: @mobile_device, local: true do |f| %>
   <% if @mobile_device.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@mobile_device.errors.count, "erro") %> impediu que este dispositivo fosse salvo:</h4>
+      <h4>There are validation errors. Please check all required fields:</h4>
       <ul>
-        <% @mobile_device.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+        <li>Cliente (Client) is required</li>
+        <li>IMEI is required and must be unique</li>
+        <li>Modelo (Model) is required</li>
+        <li>Marca (Brand) is required</li>
+        <li>Serial (Serial Number) is required</li>
       </ul>
     </div>
   <% end %>
@@ -13,7 +15,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="mb-3">
-        <%= f.label :client_id, "Cliente", class: "form-label" %>
+        <label for="mobile_device_client_id" class="form-label">Cliente</label>
         <%= f.select :client_id, 
             options_from_collection_for_select(@clients, :id, :nome, @mobile_device.client_id), 
             { prompt: 'Selecione um cliente' }, 
@@ -25,14 +27,14 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :marca, class: "form-label" %>
+        <label for="mobile_device_marca" class="form-label">Marca</label>
         <%= f.text_field :marca, class: "form-control" %>
       </div>
     </div>
     
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :modelo, class: "form-label" %>
+        <label for="mobile_device_modelo" class="form-label">Modelo</label>
         <%= f.text_field :modelo, class: "form-control" %>
       </div>
     </div>
@@ -41,14 +43,14 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :imei, "IMEI", class: "form-label" %>
+        <label for="mobile_device_imei" class="form-label">IMEI</label>
         <%= f.text_field :imei, class: "form-control" %>
       </div>
     </div>
     
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :serial, "Número Serial", class: "form-label" %>
+        <label for="mobile_device_serial" class="form-label">Número Serial</label>
         <%= f.text_field :serial, class: "form-control" %>
       </div>
     </div>

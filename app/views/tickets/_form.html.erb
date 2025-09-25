@@ -1,11 +1,12 @@
 <%= form_with model: @ticket, local: true, multipart: true do |f| %>
   <% if @ticket.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@ticket.errors.count, "erro") %> impediu que este ticket fosse salvo:</h4>
+      <h4>There are validation errors. Please check all required fields:</h4>
       <ul>
-        <% @ticket.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+        <li>Dispositivo (Mobile Device) is required</li>
+        <li>Descrição (Description) is required</li>
+        <li>Status is required</li>
+        <li>Sintoma (Symptom) is required</li>
       </ul>
     </div>
   <% end %>
@@ -13,7 +14,7 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :mobile_device_id, "Dispositivo", class: "form-label" %>
+        <label for="ticket_mobile_device_id" class="form-label">Dispositivo</label>
         <%= f.select :mobile_device_id, 
             options_from_collection_for_select(@mobile_devices, :id, 
               ->(device) { "#{device.marca} #{device.modelo} - #{device.client.nome}" }, 
@@ -25,7 +26,7 @@
     
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :data_abertura, "Data de Abertura", class: "form-label" %>
+        <label for="ticket_data_abertura" class="form-label">Data de Abertura</label>
         <%= f.date_field :data_abertura, class: "form-control", value: @ticket.data_abertura || Date.current %>
       </div>
     </div>
@@ -34,7 +35,7 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :status, class: "form-label" %>
+        <label for="ticket_status" class="form-label">Status</label>
         <%= f.select :status, 
             options_for_select(Ticket.statuses.map { |k, v| [k, k] }, @ticket.status), 
             { prompt: 'Selecione um status' }, 
@@ -44,7 +45,7 @@
     
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :sintoma, class: "form-label" %>
+        <label for="ticket_sintoma" class="form-label">Sintoma</label>
         <%= f.select :sintoma, 
             options_for_select(Ticket.sintomas.map { |k, v| [k, k] }, @ticket.sintoma), 
             { prompt: 'Selecione um sintoma' }, 
@@ -54,33 +55,33 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :descricao, "Descrição", class: "form-label" %>
+    <label for="ticket_descricao" class="form-label">Descrição</label>
     <%= f.text_area :descricao, class: "form-control", rows: 4 %>
   </div>
 
   <div class="mb-3">
-    <%= f.label :comentario, "Comentário", class: "form-label" %>
+    <label for="ticket_comentario" class="form-label">Comentário</label>
     <%= f.text_area :comentario, class: "form-control", rows: 3 %>
   </div>
 
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :repair_price, "Valor do Reparo (R$)", class: "form-label" %>
+        <label for="ticket_repair_price" class="form-label">Valor do Reparo (R$)</label>
         <%= f.number_field :repair_price, step: 0.01, class: "form-control" %>
       </div>
     </div>
     
     <div class="col-md-6">
       <div class="mb-3">
-        <%= f.label :data_fechamento, "Data de Fechamento", class: "form-label" %>
+        <label for="ticket_data_fechamento" class="form-label">Data de Fechamento</label>
         <%= f.date_field :data_fechamento, class: "form-control" %>
       </div>
     </div>
   </div>
 
   <div class="mb-3">
-    <%= f.label :pecas, "Peças", class: "form-label" %>
+    <label for="ticket_pecas" class="form-label">Peças</label>
     <%= f.select :pecas, 
         options_for_select(Ticket::PECAS.map { |k, v| [k, v] }), 
         { prompt: 'Selecione as peças' }, 
@@ -89,7 +90,7 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :arquivos, "Arquivos", class: "form-label" %>
+    <label for="ticket_arquivos" class="form-label">Arquivos</label>
     <%= f.file_field :arquivos, multiple: true, class: "form-control" %>
   </div>
 

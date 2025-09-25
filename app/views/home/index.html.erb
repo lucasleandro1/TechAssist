@@ -116,7 +116,7 @@
         <h5>Busca Rápida - Cliente</h5>
       </div>
       <div class="card-body">
-        <%= form_with url: "/clients", method: :get, local: true, class: "row g-3" do |f| %>
+        <%= form_with url: search_clients_clients_path, method: :get, local: true, class: "row g-3" do |f| %>
           <div class="col-md-8">
             <%= f.text_field :q_cpf_cont, value: params[:q_cpf_cont], 
                 placeholder: "Digite o CPF", class: "form-control" %>
@@ -135,7 +135,7 @@
         <h5>Busca Rápida - Dispositivo</h5>
       </div>
       <div class="card-body">
-        <%= form_with url: "/mobile_devices", method: :get, local: true, class: "row g-3" do |f| %>
+        <%= form_with url: search_mobile_devices_mobile_devices_path, method: :get, local: true, class: "row g-3" do |f| %>
           <div class="col-md-8">
             <%= f.text_field :q_imei_cont, value: params[:q_imei_cont], 
                 placeholder: "Digite o IMEI", class: "form-control" %>

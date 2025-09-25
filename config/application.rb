@@ -8,9 +8,10 @@ Bundler.require(*Rails.groups)
 
 def set_locate_configs_and_timezone
   config.time_zone = 'Brasilia'
-  config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**/*.{rb,yml}').to_s]
-  config.i18n.available_locales = [:en, 'pt-BR']
-  config.i18n.default_locale = 'pt-BR'
+  # Use only default Rails locales to avoid pluralization issues
+  config.i18n.available_locales = [:en]
+  config.i18n.default_locale = :en
+  config.i18n.fallbacks = true
 end
 
 module AssisTech
@@ -19,7 +20,7 @@ module AssisTech
     config.load_defaults 7.0
     set_locate_configs_and_timezone #pt-BR
     # Configuration for the application, engines, and railties goes here.
-    config.api_only = true
+    # config.api_only = true  # Disabled for full web application
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_your_app_session'
     # These settings can be overridden in specific environments using the files

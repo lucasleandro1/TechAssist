@@ -18,7 +18,8 @@ class MobileDevicesController < ApplicationController
     @mobile_device = MobileDevice.new(mobile_device_params)
     
     if @mobile_device.save
-      redirect_to @mobile_device, notice: 'Dispositivo móvel criado com sucesso.'
+      flash[:notice] = 'Dispositivo móvel criado com sucesso.'
+      redirect_to @mobile_device
     else
       @clients = Client.all
       render :new
@@ -31,7 +32,8 @@ class MobileDevicesController < ApplicationController
 
   def update
     if @mobile_device.update(mobile_device_params)
-      redirect_to @mobile_device, notice: 'Dispositivo móvel atualizado com sucesso.'
+      flash[:notice] = 'Dispositivo móvel atualizado com sucesso.'
+      redirect_to @mobile_device
     else
       @clients = Client.all
       render :edit

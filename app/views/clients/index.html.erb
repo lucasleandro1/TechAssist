@@ -6,7 +6,7 @@
 
 <div class="card mb-4">
   <div class="card-body">
-    <%= form_with url: search_clients_path, method: :get, local: true, class: "row g-3" do |f| %>
+    <%= form_with url: search_clients_clients_path, method: :get, local: true, class: "row g-3" do |f| %>
       <div class="col-md-8">
         <%= f.text_field :q_cpf_cont, value: params[:q_cpf_cont], 
             placeholder: "Digite o CPF para pesquisar", class: "form-control" %>
@@ -51,7 +51,7 @@
                 <td>
                   <%= link_to 'Ver', client, class: 'btn btn-sm btn-outline-primary' %>
                   <%= link_to 'Editar', edit_client_path(client), class: 'btn btn-sm btn-outline-secondary' %>
-                  <%= link_to 'Excluir', client, method: :delete, 
+                  <%= button_to 'Excluir', client, method: :delete, 
                       confirm: 'Tem certeza? Isso excluirá todos os dispositivos e tickets associados.', 
                       class: 'btn btn-sm btn-outline-danger' %>
                 </td>
