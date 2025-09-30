@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
-  <h1>TechAssist - Dashboard</h1>
+  <h1>Dashboard</h1>
   <div>
     <%= link_to 'Novo Ticket', '/tickets/new', class: 'btn btn-primary' %>
   </div>
@@ -63,23 +63,8 @@
       </div>
     </div>
   </div>
-
-  <div class="col-md-3">
-    <div class="card text-white bg-warning">
-      <div class="card-body">
-        <div class="d-flex justify-content-between">
-          <div>
-            <h4 class="card-title"><%= number_to_currency(@total_received) %></h4>
-            <p class="card-text">Total Recebido</p>
-          </div>
-          <div class="align-self-center">
-            <i class="fas fa-dollar-sign fa-2x"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
+
 
 <!-- Tickets por Status -->
 <div class="row mb-4">
@@ -108,93 +93,3 @@
   </div>
 </div>
 
-<!-- Pesquisa rápida -->
-<div class="row mb-4">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
-        <h5>Busca Rápida - Cliente</h5>
-      </div>
-      <div class="card-body">
-        <%= form_with url: search_clients_clients_path, method: :get, local: true, class: "row g-3" do |f| %>
-          <div class="col-md-8">
-            <%= f.text_field :q_cpf_cont, value: params[:q_cpf_cont], 
-                placeholder: "Digite o CPF", class: "form-control" %>
-          </div>
-          <div class="col-md-4">
-            <%= f.submit "Buscar", class: "btn btn-outline-primary w-100" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
-        <h5>Busca Rápida - Dispositivo</h5>
-      </div>
-      <div class="card-body">
-        <%= form_with url: search_mobile_devices_mobile_devices_path, method: :get, local: true, class: "row g-3" do |f| %>
-          <div class="col-md-8">
-            <%= f.text_field :q_imei_cont, value: params[:q_imei_cont], 
-                placeholder: "Digite o IMEI", class: "form-control" %>
-          </div>
-          <div class="col-md-4">
-            <%= f.submit "Buscar", class: "btn btn-outline-primary w-100" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Tickets Recentes -->
-<div class="row">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Tickets Recentes</h5>
-        <%= link_to 'Ver todos', tickets_path, class: 'btn btn-outline-primary btn-sm' %>
-      </div>
-      <div class="card-body">
-        <% if @recent_tickets.any? %>
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Cliente</th>
-                  <th>Dispositivo</th>
-                  <th>Status</th>
-                  <th>Data Abertura</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @recent_tickets.each do |ticket| %>
-                  <tr>
-                    <td><%= ticket.id %></td>
-                    <td><%= ticket.mobile_device.client.nome %></td>
-                    <td><%= "#{ticket.mobile_device.marca} #{ticket.mobile_device.modelo}" %></td>
-                    <td>
-                      <span class="badge bg-<%= status_color(ticket.status) %>">
-                        <%= ticket.status %>
-                      </span>
-                    </td>
-                    <td><%= ticket.data_abertura&.strftime('%d/%m/%Y') %></td>
-                    <td>
-                      <%= link_to 'Ver', ticket, class: 'btn btn-sm btn-outline-primary' %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        <% else %>
-          <p class="text-muted text-center">Nenhum ticket encontrado</p>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
