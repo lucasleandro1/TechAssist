@@ -1,15 +1,14 @@
 module Api
   module V1
-      class MobileDevicesController < ApplicationController
+    class MobileDevicesController < ApplicationController
       # before_action :authenticate_devise_api_token!
 
       def index
-        instance_list = MobileDeviceManager::List.new.call
-        if instance_list[:success]
-          @mobile_devices = instance_list[:resources]
+        if current_devise_api_user
+          @mobile_devices = current_devise_api_user.mobile_devices.distinct.includes(:tickets)
           render json: @mobile_devices.as_json(include: :tickets)
         else
-          render json: instance_list, status: :unprocessable_entity
+          render json: { error: "Unauthorized" }, status: :unauthorized
         end
       end
 

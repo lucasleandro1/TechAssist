@@ -2,7 +2,7 @@ class TicketsController < ApplicationController
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tickets = Ticket.includes(mobile_device: :client).all
+    @tickets = current_user.tickets.includes(mobile_device: :client)
   end
 
   def show
@@ -12,7 +12,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new
     @ticket.mobile_device_id = params[:mobile_device_id] if params[:mobile_device_id]
     @ticket.data_abertura = Date.current
-    @mobile_devices = MobileDevice.includes(:client).all
+    @mobile_devices = current_user.mobile_devices.includes(:client).distinct
   end
 
   def create
@@ -22,13 +22,13 @@ class TicketsController < ApplicationController
       flash[:notice] = 'Ticket criado com sucesso.'
       redirect_to @ticket
     else
-      @mobile_devices = MobileDevice.includes(:client).all
+      @mobile_devices = current_user.mobile_devices.includes(:client).distinct
       render :new
     end
   end
 
   def edit
-    @mobile_devices = MobileDevice.includes(:client).all
+    @mobile_devices = current_user.mobile_devices.includes(:client).distinct
   end
 
   def update
@@ -37,7 +37,7 @@ class TicketsController < ApplicationController
       flash[:notice] = 'Ticket atualizado com sucesso.'
       redirect_to @ticket
     else
-      @mobile_devices = MobileDevice.includes(:client).all
+      @mobile_devices = current_user.mobile_devices.includes(:client).distinct
       render :edit
     end
   end
@@ -49,13 +49,13 @@ class TicketsController < ApplicationController
 
   def status
     @status = params[:status]
-    @tickets = Ticket.where(status: @status).includes(mobile_device: :client)
+    @tickets = current_user.tickets.where(status: @status).includes(mobile_device: :client)
   end
 
   private
 
   def set_ticket
-    @ticket = Ticket.find(params[:id])
+    @ticket = current_user.tickets.find(params[:id])
   end
 
   def ticket_params

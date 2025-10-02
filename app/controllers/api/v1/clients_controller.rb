@@ -4,12 +4,11 @@ module Api
       # before_action :authenticate_devise_api_token!
 
       def index
-        instance_list = ClientManager::List.new.call
-        if instance_list[:success]
-          @clients = instance_list[:resources]
+        if current_devise_api_user
+          @clients = current_devise_api_user.clients.distinct
           render json: @clients.as_json(include: {mobile_devices: { only: [:id, :marca, :modelo], include: {tickets: { only: [:id, :status, :created_at]}}}})
         else
-          render json: instance_list, status: :unprocessable_entity
+          render json: { error: "Unauthorized" }, status: :unauthorized
         end
       end
 

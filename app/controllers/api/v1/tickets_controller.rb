@@ -4,20 +4,15 @@ module Api
       before_action :authenticate_devise_api_token!, :set_ticket, only: [:generate_pdf]
 
       def index
-        instance_list = TicketManager::List.new.call
-        if instance_list[:success]
-          @tickets = instance_list[:resources]
-          tickets_with_names = @tickets.map do |ticket|
-            ticket.as_json(include: {
-              mobile_device: {
-                include: :client
-              }
-            })
-          end
-          render json: tickets_with_names
-        else
-          render json: instance_list, status: :unprocessable_entity
+        @tickets = current_devise_api_user.tickets.includes(mobile_device: :client)
+        tickets_with_names = @tickets.map do |ticket|
+          ticket.as_json(include: {
+            mobile_device: {
+              include: :client
+            }
+          })
         end
+        render json: tickets_with_names
       end
 
       def create
@@ -82,7 +77,7 @@ module Api
       private
 
       def set_ticket
-        @ticket = Ticket.find(params[:id])
+        @ticket = current_devise_api_user.tickets.find(params[:id])
       end
 
       def ticket_params

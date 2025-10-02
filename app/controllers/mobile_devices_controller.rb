@@ -2,7 +2,7 @@ class MobileDevicesController < ApplicationController
   before_action :set_mobile_device, only: [:show, :edit, :update, :destroy]
 
   def index
-    @mobile_devices = MobileDevice.includes(:client).all
+    @mobile_devices = current_user.mobile_devices.includes(:client).distinct
   end
 
   def show
@@ -11,7 +11,7 @@ class MobileDevicesController < ApplicationController
   def new
     @mobile_device = MobileDevice.new
     @mobile_device.client_id = params[:client_id] if params[:client_id]
-    @clients = Client.all
+    @clients = current_user.clients.distinct
   end
 
   def create
@@ -21,13 +21,13 @@ class MobileDevicesController < ApplicationController
       flash[:notice] = 'Dispositivo móvel criado com sucesso.'
       redirect_to @mobile_device
     else
-      @clients = Client.all
+      @clients = current_user.clients.distinct
       render :new
     end
   end
 
   def edit
-    @clients = Client.all
+    @clients = current_user.clients.distinct
   end
 
   def update
@@ -35,7 +35,7 @@ class MobileDevicesController < ApplicationController
       flash[:notice] = 'Dispositivo móvel atualizado com sucesso.'
       redirect_to @mobile_device
     else
-      @clients = Client.all
+      @clients = current_user.clients.distinct
       render :edit
     end
   end
@@ -47,9 +47,9 @@ class MobileDevicesController < ApplicationController
 
   def search
     if params[:q_imei_cont].present?
-      @mobile_devices = MobileDevice.includes(:client).where("imei LIKE ?", "%#{params[:q_imei_cont]}%")
+      @mobile_devices = current_user.mobile_devices.includes(:client).where("imei LIKE ?", "%#{params[:q_imei_cont]}%")
     else
-      @mobile_devices = MobileDevice.includes(:client).all
+      @mobile_devices = current_user.mobile_devices.includes(:client).distinct
     end
     render :index
   end
@@ -57,7 +57,7 @@ class MobileDevicesController < ApplicationController
   private
 
   def set_mobile_device
-    @mobile_device = MobileDevice.find(params[:id])
+    @mobile_device = current_user.mobile_devices.find(params[:id])
   end
 
   def mobile_device_params

@@ -57,6 +57,33 @@
           </ul>
         </li>
       </ul>
+      
+      <ul class="navbar-nav ms-auto">
+        <% if user_signed_in? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user"></i> <%= current_user.email %>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Perfil", edit_user_registration_path, class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= button_to "Sair", destroy_user_session_path, 
+                    method: :delete, 
+                    class: "dropdown-item btn btn-link text-start p-0 border-0 bg-transparent text-decoration-none",
+                    style: "width: 100%; color: inherit;" %>
+              </li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Entrar", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Registrar", new_user_registration_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </nav>
