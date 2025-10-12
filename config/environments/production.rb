@@ -32,6 +32,10 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   config.hosts << "techassist-lv82.onrender.com"
+  config.hosts << /techassist-lv82\.onrender\.com/
+  
+  # Alternative: Disable host authorization entirely if needed
+  config.host_authorization = { exclude: ->(request) { request.host == "techassist-lv82.onrender.com" } }
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
