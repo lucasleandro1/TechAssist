@@ -1,15 +1,5 @@
 <%= form_with model: @ticket, local: true, multipart: true do |f| %>
-  <% if @ticket.errors.any? %>
-    <div class="alert alert-danger">
-      <h4>There are validation errors. Please check all required fields:</h4>
-      <ul>
-        <li>Dispositivo (Mobile Device) is required</li>
-        <li>Descrição (Description) is required</li>
-        <li>Status is required</li>
-        <li>Sintoma (Symptom) is required</li>
-      </ul>
-    </div>
-  <% end %>
+  <!-- Validação de erros temporariamente desabilitada -->
 
   <div class="row">
     <div class="col-md-6">

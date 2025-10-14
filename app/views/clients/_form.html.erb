@@ -1,15 +1,5 @@
 <%= form_with model: @client, local: true do |f| %>
-  <% if @client.errors.any? %>
-    <div class="alert alert-danger">
-      <h4>There are validation errors. Please check all required fields:</h4>
-      <ul>
-        <li>Nome (Name) is required</li>
-        <li>CPF is required and must be unique</li>
-        <li>Email is required</li>
-        <li>Telefone (Phone) is required</li>
-      </ul>
-    </div>
-  <% end %>
+  <!-- Validação de erros temporariamente desabilitada para evitar problema de tradução -->
 
   <div class="row">
     <div class="col-md-6">

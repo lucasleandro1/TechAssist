@@ -19,7 +19,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket_params.merge(user_id: current_user&.id || 1))
     
     if @ticket.save
-      flash[:notice] = 'Ticket criado com sucesso.'
+      flash[:notice] = 'Ticket criado com sucesso. Fluxo completo finalizado!'
       redirect_to @ticket
     else
       @mobile_devices = current_user.mobile_devices.includes(:client).distinct

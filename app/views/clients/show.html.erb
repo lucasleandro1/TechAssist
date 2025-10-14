@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1><%= @client.nome %></h1>
   <div>
+    <%= link_to 'Continuar Fluxo (Dispositivo + Ticket)', select_or_create_mobile_devices_path(@client.id), class: 'btn btn-success' %>
     <%= link_to 'Editar', edit_client_path(@client), class: 'btn btn-primary' %>
     <%= link_to 'Voltar', clients_path, class: 'btn btn-secondary' %>
   </div>

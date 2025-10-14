@@ -2,22 +2,23 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clients = current_user.clients.distinct
+    @clients = current_user.clients
   end
 
   def show
   end
 
   def new
-    @client = Client.new
+    @client = current_user.clients.build
   end
 
   def create
-    @client = Client.new(client_params)
+    @client = current_user.clients.build(client_params)
     
     if @client.save
       flash[:notice] = 'Cliente criado com sucesso.'
-      redirect_to @client
+      # Redireciona para criar dispositivo móvel ou selecionar existente
+      redirect_to select_or_create_mobile_devices_path(@client.id)
     else
       render :new
     end
@@ -43,9 +44,9 @@ class ClientsController < ApplicationController
 
   def search
     if params[:q_cpf_cont].present?
-      @clients = Client.where("cpf LIKE ?", "%#{params[:q_cpf_cont]}%")
+      @clients = current_user.clients.where("cpf LIKE ?", "%#{params[:q_cpf_cont]}%")
     else
-      @clients = Client.all
+      @clients = current_user.clients
     end
     render :index
   end

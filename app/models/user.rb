@@ -4,8 +4,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :api
 
+  has_many :clients, dependent: :destroy
   has_many :tickets, dependent: :destroy
-  has_many :mobile_devices, through: :tickets
-  has_many :clients, through: :mobile_devices
+  has_many :mobile_devices, through: :clients
 
 end

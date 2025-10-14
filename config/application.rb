@@ -8,10 +8,12 @@ Bundler.require(*Rails.groups)
 
 def set_locate_configs_and_timezone
   config.time_zone = 'Brasilia'
-  # Use only default Rails locales to avoid pluralization issues
+  # Force English only to avoid translation issues
   config.i18n.available_locales = [:en]
   config.i18n.default_locale = :en
-  config.i18n.fallbacks = true
+  config.i18n.fallbacks = [:en]
+  config.i18n.load_path = []  # Don't load any locale files
+  config.i18n.enforce_available_locales = true
 end
 
 module AssisTech

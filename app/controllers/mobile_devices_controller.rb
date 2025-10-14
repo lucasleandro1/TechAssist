@@ -11,7 +11,22 @@ class MobileDevicesController < ApplicationController
   def new
     @mobile_device = MobileDevice.new
     @mobile_device.client_id = params[:client_id] if params[:client_id]
-    @clients = current_user.clients.distinct
+    @clients = current_user.clients
+  end
+
+  def select_or_create
+    @client = current_user.clients.find(params[:client_id])
+    @existing_devices = @client.mobile_devices
+    @mobile_device = MobileDevice.new(client_id: @client.id)
+  end
+
+  def use_existing
+    mobile_device = current_user.mobile_devices.find(params[:mobile_device_id])
+    flash[:notice] = 'Dispositivo selecionado com sucesso.'
+    redirect_to new_ticket_path(mobile_device_id: mobile_device.id)
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = 'Dispositivo não encontrado ou não pertence a você.'
+    redirect_to mobile_devices_path
   end
 
   def create
@@ -19,15 +34,16 @@ class MobileDevicesController < ApplicationController
     
     if @mobile_device.save
       flash[:notice] = 'Dispositivo móvel criado com sucesso.'
-      redirect_to @mobile_device
+      # Redireciona para criar ticket
+      redirect_to new_ticket_path(mobile_device_id: @mobile_device.id)
     else
-      @clients = current_user.clients.distinct
+      @clients = current_user.clients
       render :new
     end
   end
 
   def edit
-    @clients = current_user.clients.distinct
+    @clients = current_user.clients
   end
 
   def update
@@ -35,7 +51,7 @@ class MobileDevicesController < ApplicationController
       flash[:notice] = 'Dispositivo móvel atualizado com sucesso.'
       redirect_to @mobile_device
     else
-      @clients = current_user.clients.distinct
+      @clients = current_user.clients
       render :edit
     end
   end

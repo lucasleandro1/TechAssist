@@ -1,0 +1,99 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h2>Dispositivo Móvel para <%= @client.nome %></h2>
+      <p class="text-muted">Cliente: <%= @client.nome %> | CPF: <%= @client.cpf %></p>
+      
+      <% if @existing_devices.any? %>
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5>Dispositivos Existentes</h5>
+            <p class="text-muted mb-0">Selecione um dispositivo já cadastrado para este cliente:</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <% @existing_devices.each do |device| %>
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div class="card border-primary">
+                    <div class="card-body">
+                      <h6 class="card-title"><%= device.marca %> <%= device.modelo %></h6>
+                      <p class="card-text">
+                        <small class="text-muted">
+                          IMEI: <%= device.imei %><br>
+                          Serial: <%= device.serial %>
+                        </small>
+                      </p>
+                      <%= form_with url: use_existing_mobile_devices_path(device.id), method: :post, class: "d-inline" do %>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                          <i class="fas fa-mobile-alt me-1"></i>
+                          Usar este dispositivo
+                        </button>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mb-4">
+          <h6 class="text-muted">OU</h6>
+        </div>
+      <% else %>
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle me-2"></i>
+          Este cliente não possui dispositivos cadastrados. Vamos cadastrar um novo dispositivo.
+        </div>
+      <% end %>
+
+      <div class="card">
+        <div class="card-header">
+          <h5>Cadastrar Novo Dispositivo</h5>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @mobile_device, local: true do |form| %>
+            <%= form.hidden_field :client_id %>
+            
+            <!-- Validação de erros temporariamente desabilitada -->
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <%= form.label :marca, class: "form-label" %>
+                  <%= form.text_field :marca, class: "form-control" %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <%= form.label :modelo, class: "form-label" %>
+                  <%= form.text_field :modelo, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <%= form.label :imei, "IMEI", class: "form-label" %>
+                  <%= form.text_field :imei, class: "form-control" %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <%= form.label :serial, "Número de Série", class: "form-label" %>
+                  <%= form.text_field :serial, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <%= link_to "Voltar", clients_path, class: "btn btn-secondary" %>
+              <%= form.submit "Cadastrar e Criar Ticket", class: "btn btn-success" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
